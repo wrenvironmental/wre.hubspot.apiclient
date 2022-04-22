@@ -19,5 +19,5 @@ public class ContactClient : IHubspotClient
         return _httpClient;
     }
 
-    public string EntityBaseUrlPrefix => "crm/v3";
+    public string EntityBaseUrl => "crm/v3";
 }

@@ -5,11 +5,11 @@ namespace wre.hubspot.apiclient.Common;
 public abstract class HubspotCommonEntity
 {
     [JsonIgnore]
-    public string EntityUrlPrefix { get; }
+    public string EntityUrlSuffix { get; }
 
     protected HubspotCommonEntity(string entityUrlPrefix)
     {
-        EntityUrlPrefix = entityUrlPrefix;
+        EntityUrlSuffix = entityUrlPrefix;
     }
 
     public virtual object GetCustomObject<T>(T entity)

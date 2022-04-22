@@ -2,5 +2,5 @@
 
 public interface IHubspotEntity
 {
-    string EntityUrlPrefix { get; }
+    string EntityUrlSuffix { get; }
 }

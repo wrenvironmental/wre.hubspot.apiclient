@@ -1,4 +1,5 @@
-﻿using wre.hubspot.apiclient.CRM;
+﻿using wre.hubspot.apiclient.Associations;
+using wre.hubspot.apiclient.CRM;
 
 namespace wre.hubspot.apiclient
 {
@@ -8,9 +9,15 @@ namespace wre.hubspot.apiclient
         {
             var baseUrl = HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl));
             CRM = new CRMObjects(baseUrl);
+            Associations = new HubspotAssociationClient(baseUrl);
         }
 
         public CRMObjects CRM
+        {
+            get;
+        }
+
+        public HubspotAssociationClient Associations
         {
             get;
         }

@@ -2,6 +2,6 @@
 
 public interface IHubspotCustomEntity
 {
-    string EntityUrlPrefix { get; }
+    string EntityUrlSuffix { get; }
     string ObjectTypeId { get; set; }
 }

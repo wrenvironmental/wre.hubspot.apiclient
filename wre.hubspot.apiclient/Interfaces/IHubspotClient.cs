@@ -3,5 +3,5 @@
 public interface IHubspotClient
 {
     HttpClient HttpClient();
-    string EntityBaseUrlPrefix { get; }
+    string EntityBaseUrl { get; }
 }

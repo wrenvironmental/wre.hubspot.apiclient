@@ -10,9 +10,9 @@ public static class HttpExtensions
     public static async Task PostAsync(this HttpClient httpClient, string url, string data)
     {
         var response = await httpClient.PostAsync(url, new JsonContent(data));
+        var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            var content = await response.Content.ReadAsStringAsync();
             var settings = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true
