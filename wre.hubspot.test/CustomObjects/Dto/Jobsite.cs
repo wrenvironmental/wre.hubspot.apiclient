@@ -17,17 +17,17 @@ public class Jobsite : CustomObject, IHubspotCustomEntity, IHubspotCustomSeriali
     [JsonPropertyName("jobsiteid")]
     public int JobsiteId { get; set; }
     [JsonPropertyName("sitename")]
-    public string SiteName { get; set; }
+    public string? SiteName { get; set; }
     [JsonPropertyName("contactname")]
-    public string ContactName { get; set; }
+    public string? ContactName { get; set; }
     [JsonPropertyName("address")]
-    public string Address { get; set; }
+    public string? Address { get; set; }
     [JsonPropertyName("city")]
-    public string City { get; set; }
+    public string? City { get; set; }
     [JsonPropertyName("state")]
-    public string State { get; set; }
+    public string? State { get; set; }
     [JsonPropertyName("zip")]
-    public string Zip { get; set; }
+    public string? Zip { get; set; }
     [JsonPropertyName("gallons")]
     public int? Gallons { get; set; }
     [JsonPropertyName("lastservicedate")]
@@ -35,11 +35,7 @@ public class Jobsite : CustomObject, IHubspotCustomEntity, IHubspotCustomSeriali
     [JsonPropertyName("nextservicedate")]
     public DateTime? NextServiceDate { get; set; }
     [JsonPropertyName("acquisitionname")]
-    public string AcquisitionName { get; set; }
-    [JsonIgnore]
-    public string CreateUrl => "objects";
-    [JsonIgnore]
-    public string UpdateUrl => CreateUrl;
+    public string? AcquisitionName { get; set; }
     [JsonIgnore]
     public string ObjectTypeId { get; set; }
 }

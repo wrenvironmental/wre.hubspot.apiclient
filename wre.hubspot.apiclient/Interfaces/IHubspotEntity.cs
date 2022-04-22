@@ -2,6 +2,5 @@
 
 public interface IHubspotEntity
 {
-    string CreateUrl { get; }
-    string UpdateUrl { get; }
+    string EntityUrlPrefix { get; }
 }

@@ -1,5 +1,4 @@
 ﻿using wre.hubspot.apiclient.CRM;
-// ReSharper disable InconsistentNaming
 
 namespace wre.hubspot.apiclient
 {

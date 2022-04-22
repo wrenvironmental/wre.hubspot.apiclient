@@ -5,7 +5,6 @@ using wre.hubspot.apiclient.CRM.Products;
 
 namespace wre.hubspot.apiclient.CRM;
 
-// ReSharper disable once InconsistentNaming
 public class CRMObjects
 {
     public CRMObjects(string baseUrl)

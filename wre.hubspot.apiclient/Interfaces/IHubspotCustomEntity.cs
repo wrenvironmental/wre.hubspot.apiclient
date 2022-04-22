@@ -2,7 +2,6 @@
 
 public interface IHubspotCustomEntity
 {
-    string CreateUrl { get; }
-    string UpdateUrl { get; }
+    string EntityUrlPrefix { get; }
     string ObjectTypeId { get; set; }
 }

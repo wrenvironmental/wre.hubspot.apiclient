@@ -7,5 +7,5 @@ public class HubspotStandardResponseModel<T>
     public int? Id { get; set; }
 
     [JsonPropertyName("properties")]
-    public T Result { get; set; }
+    public T? Result { get; set; }
 }

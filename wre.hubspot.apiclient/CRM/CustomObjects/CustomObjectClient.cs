@@ -19,10 +19,5 @@ public class CustomObjectClient : IHubspotClient
         return _httpClient;
     }
 
-    public IHubspotClient Set<T>(IHubspotCustomEntity entity) where T : IHubspotCustomEntity
-    {
-        return this;
-    }
-
     public string EntityBaseUrlPrefix => "crm/v3";
 }
