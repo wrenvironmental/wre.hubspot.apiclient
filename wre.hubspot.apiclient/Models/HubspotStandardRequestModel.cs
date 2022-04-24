@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace wre.hubspot.apiclient.Common;
+namespace wre.hubspot.apiclient.Models;
 
 public class HubspotStandardRequestModel<T>
 {

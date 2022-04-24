@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.Infrastructure;
+using wre.hubspot.apiclient.Models;
 
 namespace wre.hubspot.apiclient.Extensions;
 

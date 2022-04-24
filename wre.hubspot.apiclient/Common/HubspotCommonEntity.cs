@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using wre.hubspot.apiclient.Models;
 
 namespace wre.hubspot.apiclient.Common;
 

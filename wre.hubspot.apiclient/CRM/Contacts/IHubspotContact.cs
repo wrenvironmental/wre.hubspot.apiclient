@@ -1,11 +1,9 @@
-﻿using wre.hubspot.apiclient.Common;
-using wre.hubspot.apiclient.Interfaces;
+﻿using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Contacts;
 
-public class Contact : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotContact
+public interface IHubspotContact : IHubspotEntity
 {
-    public Contact() : base("objects/contacts") { }
     public string? Company { get; set; }
     public string? Email { get; set; }
     public string? FirstName { get; set; }

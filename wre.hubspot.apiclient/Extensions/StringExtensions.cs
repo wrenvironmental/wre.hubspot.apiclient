@@ -6,14 +6,17 @@ namespace wre.hubspot.apiclient.Extensions;
 
 public static class StringExtensions
 {
-    public static string SerializeToJson(this object entity)
+    public static string SerializeToJson(this object entity, bool checkForCustom = true)
     {
-        if (entity is not IHubspotCustomSerialization hubspotEntity) return JsonSerializer.Serialize(entity);
-
         var settings = new JsonSerializerOptions
         {
             PropertyNamingPolicy = new LowerCaseNamingPolicy()
         };
+
+        if (entity is not IHubspotCustomSerialization hubspotEntity) 
+            return JsonSerializer.Serialize(entity, settings);
+
+        
         settings.Converters.Add(new DateTimeConverter());
         return JsonSerializer.Serialize(hubspotEntity.GetCustomObject(entity), settings);
 

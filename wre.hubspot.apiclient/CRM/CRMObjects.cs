@@ -9,13 +9,13 @@ public class CRMObjects
 {
     public CRMObjects(string baseUrl)
     {
-        Contacts = new ContactClient(baseUrl);
+        Contacts = new ContactClient<Contact>(baseUrl);
         Deals = new DealClient(baseUrl);
         Products = new ProductClient(baseUrl);
         CustomObjects = new CustomObjectClient(baseUrl);
     }
 
-    public ContactClient Contacts { get; set; }
+    public ContactClient<Contact> Contacts { get; set; }
     public DealClient Deals { get; set; }
     public ProductClient Products { get; set; }
     public CustomObjectClient CustomObjects { get; set; }

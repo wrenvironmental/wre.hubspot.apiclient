@@ -5,6 +5,7 @@ using wre.hubspot.apiclient;
 using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.CRM.Products;
 using wre.hubspot.apiclient.Extensions;
+using wre.hubspot.apiclient.Models;
 
 namespace wre.hubspot.test.Products
 {

@@ -1,4 +1,6 @@
-﻿namespace wre.hubspot.apiclient.Common;
+﻿using wre.hubspot.apiclient.Models;
+
+namespace wre.hubspot.apiclient.Common;
 
 public class HubspotApiException : Exception
 {

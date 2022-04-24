@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wre.hubspot.apiclient", "wre.hubspot.apiclient\wre.hubspot.apiclient.csproj", "{32B34890-F85C-477E-B74D-9B6E2B1D9B57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wre.hubspot.apiclient", "wre.hubspot.apiclient\wre.hubspot.apiclient.csproj", "{32B34890-F85C-477E-B74D-9B6E2B1D9B57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wre.hubspot.test", "wre.hubspot.test\wre.hubspot.test.csproj", "{FC840C54-1024-491E-968C-A1EA544B37F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wre.hubspot.test", "wre.hubspot.test\wre.hubspot.test.csproj", "{FC840C54-1024-491E-968C-A1EA544B37F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0BDB1D7-B488-4B1F-9CB8-A32F99E9672C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

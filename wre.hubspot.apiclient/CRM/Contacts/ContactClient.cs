@@ -1,10 +1,11 @@
-﻿using wre.hubspot.apiclient.Interfaces;
+﻿using wre.hubspot.apiclient.Common;
+using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Contacts;
 
-public class ContactClient : IHubspotClient
+public class ContactClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotContact
 {
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient;    
 
     public ContactClient(string baseUrl)
     {
@@ -12,6 +13,8 @@ public class ContactClient : IHubspotClient
         {
             BaseAddress = new Uri(baseUrl)
         };
+
+        Init(this);
     }
 
     public HttpClient HttpClient()

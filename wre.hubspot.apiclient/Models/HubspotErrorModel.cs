@@ -1,4 +1,4 @@
-﻿namespace wre.hubspot.apiclient.Common;
+﻿namespace wre.hubspot.apiclient.Models;
 
 public class HubspotErrorModel
 {
