@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
@@ -20,7 +19,7 @@ namespace wre.hubspot.test.Contact
         public async Task CanCreateDefaultContact()
         {
             var client = new HubspotClient();
-            await client.CRM.Contacts.CreateAsync(new apiclient.CRM.Contacts.Contact()
+            await client.CRM.Contacts.CreateAsync(new apiclient.CRM.Contacts.HubspotContact()
             {
                 Company = "test",
                 Email = "me@me.com",
@@ -58,20 +57,10 @@ namespace wre.hubspot.test.Contact
                 Email = "me2@me2.com"
             };
 
-            try
-            {
-                var results = await client.CRM.Contacts.SearchAsync<CustomContact, CustomContact>(contactSearch,
-                    contact => contact.Email);
+            var results = await client.CRM.Contacts.SearchAsync(contactSearch,
+                contact => contact.Email);
 
-                Assert.IsTrue(results.Total == 1);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
-            
+            Assert.IsTrue(results.Total == 1);
         }
     }
 }

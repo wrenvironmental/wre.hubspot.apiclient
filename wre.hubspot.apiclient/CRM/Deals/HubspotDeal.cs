@@ -4,11 +4,11 @@ using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Deals;
 
-public class Deal : HubspotCommonEntity, IHubspotEntity, IHubspotCustomSerialization
+public class HubspotDeal : HubspotCommonEntity, IHubspotEntity, IHubspotCustomSerialization, IHubspotDeal
 {
     private string _pipeline = "default";
 
-    public Deal() : base("objects/deals") { }
+    public HubspotDeal() : base("objects/deals") { }
 
     [JsonPropertyName("dealname")]
     public string? Name { get; set; }

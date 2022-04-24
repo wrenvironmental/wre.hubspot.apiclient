@@ -3,9 +3,9 @@ using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Contacts;
 
-public class Contact : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotContact
+public class HubspotContact : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotContact
 {
-    public Contact() : base("objects/contacts") { }
+    public HubspotContact() : base("objects/contacts") { }
     public string? Company { get; set; }
     public string? Email { get; set; }
     public string? FirstName { get; set; }

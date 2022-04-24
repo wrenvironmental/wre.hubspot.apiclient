@@ -3,11 +3,11 @@ using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Contacts;
 
-public class ContactClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotContact
+public class HubspotContactClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotContact
 {
     private readonly HttpClient _httpClient;    
 
-    public ContactClient(string baseUrl)
+    public HubspotContactClient(string baseUrl)
     {
         _httpClient = new HttpClient
         {

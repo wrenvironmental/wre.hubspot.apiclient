@@ -20,7 +20,7 @@ namespace wre.hubspot.test.Deals
         public async Task CanCreateDefaultDeal()
         {
             var client = new HubspotClient();
-            await client.CRM.Deals.CreateAsync(new apiclient.CRM.Deals.Deal()
+            await client.CRM.Deals.CreateAsync(new apiclient.CRM.Deals.HubspotDeal()
             {
                 Amount = 100,
                 CloseDate = new DateTime(2022, 01, 01),

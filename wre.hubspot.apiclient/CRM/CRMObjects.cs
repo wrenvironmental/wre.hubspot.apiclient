@@ -9,14 +9,14 @@ public class CRMObjects
 {
     public CRMObjects(string baseUrl)
     {
-        Contacts = new ContactClient<Contact>(baseUrl);
-        Deals = new DealClient(baseUrl);
+        Contacts = new HubspotContactClient<HubspotContact>(baseUrl);
+        Deals = new HubspotDealClient<HubspotDeal>(baseUrl);
         Products = new ProductClient(baseUrl);
         CustomObjects = new CustomObjectClient(baseUrl);
     }
 
-    public ContactClient<Contact> Contacts { get; set; }
-    public DealClient Deals { get; set; }
+    public HubspotContactClient<HubspotContact> Contacts { get; set; }
+    public HubspotDealClient<HubspotDeal> Deals { get; set; }
     public ProductClient Products { get; set; }
     public CustomObjectClient CustomObjects { get; set; }
 }
