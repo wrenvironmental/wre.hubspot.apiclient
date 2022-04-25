@@ -2,10 +2,9 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
-using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.CRM.Products;
-using wre.hubspot.apiclient.Extensions;
 using wre.hubspot.apiclient.Models;
+using wre.hubspot.test.Products.Dto;
 
 namespace wre.hubspot.test.Products
 {
@@ -22,7 +21,7 @@ namespace wre.hubspot.test.Products
         public async Task CanCreateDefaultProduct()
         {
             var client = new HubspotClient();
-            await client.CRM.Products.CreateAsync(new Product()
+            await client.CRM.Products.CreateAsync(new HubspotProduct()
             {
                 Description = "Test",
                 Name = "0123456789",
@@ -37,11 +36,11 @@ namespace wre.hubspot.test.Products
         {
             var client = new HubspotClient();
             var createdProduct
-                = await client.CRM.Products.CreateAsync<Product, HubspotStandardResponseModel<Product>>(new Product
+                = await client.CRM.Products.CreateAsync<HubspotStandardResponseModel<CustomProduct>>(new CustomProduct
                 {
                     Description = "Test",
                     Name = "0123456789",
-                    Code = "123"
+                    Code = Guid.NewGuid().ToString()
                 });
 
             Assert.IsTrue(createdProduct.Id > 0);
@@ -52,7 +51,7 @@ namespace wre.hubspot.test.Products
         {
             var client = new HubspotClient();
             var updatedProduct
-                = await client.CRM.Products.UpdateAsync<Product, HubspotStandardResponseModel<Product>>(1427866648, new Product
+                = await client.CRM.Products.UpdateAsync<HubspotStandardResponseModel<HubspotProduct>>(1427866648, new HubspotProduct
                 {
                     Description = "Updated",
                     Name = "Updated",

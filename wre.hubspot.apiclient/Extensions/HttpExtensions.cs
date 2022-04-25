@@ -75,4 +75,19 @@ public static class HttpExtensions
 
         return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, settings) ?? throw new ArgumentException("");
     }
+
+    public static async Task DeleteAsync(this HttpClient httpClient, string url, bool throwError = false)
+    {
+        var response = await httpClient.DeleteAsync(url);
+        if (throwError && !response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            var settings = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
+            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+        }
+    }
 }

@@ -40,10 +40,10 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
     }
 
-    public Task<TReturn> CreateAsync<TReturn>(T entity) where TReturn : class
+    public Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity) where TReturn : class
     {
         var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix);
-        return _client.HttpClient().PostAsync<TReturn>(url, entity.SerializeToJson());
+        return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
     public Task UpdateAsync(long id, T entity)
@@ -56,6 +56,12 @@ public class HubspotClient<T> where T : class, IHubspotEntity
     {
         var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix, id);
         return _client.HttpClient().PatchAsync<TReturn>(url, entity.SerializeToJson());
+    }
+
+    public Task DeleteAsync(T entity, long id, bool throwException = false)
+    {
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity.EntityUrlSuffix, id);
+        return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
     public Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput input, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity

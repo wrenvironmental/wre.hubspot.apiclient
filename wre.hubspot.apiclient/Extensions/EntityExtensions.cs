@@ -11,24 +11,6 @@ public static class EntityExtensions
         return client.HttpClient().PostAsync(url, entity.SerializeToJson());
     }
 
-    public static Task<TReturn> CreateAsync<T, TReturn>(this IHubspotClient client, T entity) where T : IHubspotEntity where TReturn : class
-    {
-        var url = GetFullUrl(client.EntityBaseUrl, entity.EntityUrlSuffix);
-        return client.HttpClient().PostAsync<TReturn>(url, entity.SerializeToJson());
-    }
-
-    public static Task UpdateAsync<T>(this IHubspotClient client, long id, T entity) where T : IHubspotEntity
-    {
-        var url = GetFullUrl(client.EntityBaseUrl, entity.EntityUrlSuffix, id);
-        return client.HttpClient().PostAsync(url, entity.SerializeToJson());
-    }
-
-    public static Task<TReturn> UpdateAsync<T, TReturn>(this IHubspotClient client, long id, T entity) where T : IHubspotEntity where TReturn : class
-    {
-        var url = GetFullUrl(client.EntityBaseUrl, entity.EntityUrlSuffix, id);
-        return client.HttpClient().PatchAsync<TReturn>(url, entity.SerializeToJson());
-    }
-
     #region Custom Objects
 
     public static Task CreateAsync(this IHubspotClient client, IHubspotCustomEntity entity)
@@ -58,12 +40,6 @@ public static class EntityExtensions
     private static string GetFullUrl(string baseUrlPrefix, string suffix)
     {
         return Url.Combine(baseUrlPrefix, suffix)
-            .SetQueryParam("hapikey", HubspotSettings.ApiToken);
-    }
-
-    private static string GetFullUrl(string baseUrlPrefix, string suffix, long id)
-    {
-        return Url.Combine(baseUrlPrefix, suffix, id.ToString())
             .SetQueryParam("hapikey", HubspotSettings.ApiToken);
     }
 

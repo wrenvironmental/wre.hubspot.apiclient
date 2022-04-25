@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
+using wre.hubspot.apiclient.CRM.Contacts;
 using wre.hubspot.test.Contact.Dto;
 
 namespace wre.hubspot.test.Contact
@@ -19,7 +20,7 @@ namespace wre.hubspot.test.Contact
         public async Task CanCreateDefaultContact()
         {
             var client = new HubspotClient();
-            await client.CRM.Contacts.CreateAsync(new apiclient.CRM.Contacts.HubspotContact()
+            var hubspotContact = new HubspotContact()
             {
                 Company = "test",
                 Email = "me@me.com",
@@ -27,9 +28,21 @@ namespace wre.hubspot.test.Contact
                 LastName = "Prado",
                 Phone = "5085991234",
                 Website = "www.me.com"
-            });
+            };
+            var contactSearch = new CustomContact()
+            {
+                Email = hubspotContact.Email
+            };
 
-            Assert.IsTrue(true);
+            var existingContact = await client.CRM.Contacts.SearchAsync(contactSearch, contact => contact.Email);
+            if (existingContact.Results.Count == 1)
+            {
+                await client.CRM.Contacts.DeleteAsync(hubspotContact, existingContact.Results[0].Id ?? 0, true);
+            }
+            
+            var createdContact = await client.CRM.Contacts.CreateAsync<HubspotContact>(hubspotContact);
+
+            Assert.IsTrue(createdContact.Id > 0);
         }
 
         [TestMethod]

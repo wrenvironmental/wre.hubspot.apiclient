@@ -4,7 +4,7 @@ namespace wre.hubspot.apiclient.Models;
 
 public class HubspotStandardResponseModel<T>
 {
-    public int? Id { get; set; }
+    public long? Id { get; set; }
 
     [JsonPropertyName("properties")]
     public T? Result { get; set; }

@@ -2,7 +2,7 @@
 
 namespace wre.hubspot.test.Products.Dto;
 
-public class CustomProduct : wre.hubspot.apiclient.CRM.Products.Product
+public class CustomProduct : wre.hubspot.apiclient.CRM.Products.HubspotProduct
 {
     
 }

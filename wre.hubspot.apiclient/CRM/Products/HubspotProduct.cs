@@ -4,9 +4,9 @@ using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Products;
 
-public class Product : HubspotCommonEntity, IHubspotEntity , IHubspotCustomSerialization
+public class HubspotProduct : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotProduct
 {
-    public Product() : base("objects/products") { }
+    public HubspotProduct() : base("objects/products") { }
     public string? Description { get; set; }
     [JsonPropertyName("hs_sku")]
     public string? Code { get; set; }
