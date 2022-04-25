@@ -52,10 +52,10 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
     }
 
-    public Task<TReturn> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
+    public Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
     {
         var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix, id);
-        return _client.HttpClient().PatchAsync<TReturn>(url, entity.SerializeToJson());
+        return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
     public Task DeleteAsync(T entity, long id, bool throwException = false)
