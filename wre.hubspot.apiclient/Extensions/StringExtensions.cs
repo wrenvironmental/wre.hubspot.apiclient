@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
 
@@ -10,7 +11,8 @@ public static class StringExtensions
     {
         var settings = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = new LowerCaseNamingPolicy()
+            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
         if (entity is not IHubspotCustomSerialization hubspotEntity) 

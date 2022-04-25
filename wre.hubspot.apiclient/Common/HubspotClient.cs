@@ -49,7 +49,7 @@ public class HubspotClient<T> where T : class, IHubspotEntity
     public Task UpdateAsync(long id, T entity)
     {
         var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix, id);
-        return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
+        return _client.HttpClient().PatchAsync(url, entity.SerializeToJson());
     }
 
     public Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class

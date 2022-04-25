@@ -35,6 +35,12 @@ public static class EntityExtensions
         var url = GetFullUrl(client.EntityBaseUrl, entity.EntityUrlSuffix, entity.ObjectTypeId, id);
         return client.HttpClient().PatchAsync<TReturn>(url, entity.SerializeToJson());
     }
+
+    public static Task DeleteAsync(this IHubspotClient client, long id, IHubspotCustomEntity entity)
+    {
+        var url = GetFullUrl(client.EntityBaseUrl, entity.EntityUrlSuffix, entity.ObjectTypeId, id);
+        return client.HttpClient().DeleteAsync(url);
+    }
     #endregion
 
     private static string GetFullUrl(string baseUrlPrefix, string suffix)

@@ -2,11 +2,11 @@
 
 namespace wre.hubspot.apiclient.CRM.CustomObjects;
 
-public class CustomObjectClient : IHubspotClient
+public class HubspotCustomObjectClient : IHubspotClient
 {
     private readonly HttpClient _httpClient;
 
-    public CustomObjectClient(string baseUrl)
+    public HubspotCustomObjectClient(string baseUrl)
     {
         _httpClient = new HttpClient
         {

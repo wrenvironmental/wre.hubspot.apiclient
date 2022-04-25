@@ -6,7 +6,7 @@ using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.test.CustomObjects.Dto;
 
-public class Jobsite : CustomObject, IHubspotCustomEntity, IHubspotCustomSerialization
+public class Jobsite : HubspotCustomObject, IHubspotCustomEntity, IHubspotCustomSerialization
 {
     public Jobsite()
     {

@@ -12,11 +12,11 @@ public class CRMObjects
         Contacts = new HubspotContactClient<HubspotContact>(baseUrl);
         Deals = new HubspotDealClient<HubspotDeal>(baseUrl);
         Products = new HubspotProductClient<HubspotProduct>(baseUrl);
-        CustomObjects = new CustomObjectClient(baseUrl);
+        CustomObjects = new HubspotCustomObjectClient(baseUrl);
     }
 
     public HubspotContactClient<HubspotContact> Contacts { get; set; }
     public HubspotDealClient<HubspotDeal> Deals { get; set; }
     public HubspotProductClient<HubspotProduct> Products { get; set; }
-    public CustomObjectClient CustomObjects { get; set; }
+    public HubspotCustomObjectClient CustomObjects { get; set; }
 }
