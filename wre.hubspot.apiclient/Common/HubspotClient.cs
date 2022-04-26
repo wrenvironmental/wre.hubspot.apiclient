@@ -36,37 +36,37 @@ public class HubspotClient<T> where T : class, IHubspotEntity
 
     public Task CreateAsync(T entity)
     {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity.EntityUrlSuffix);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
         return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
     }
 
     public Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity) where TReturn : class
     {
-        var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
         return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
     public Task UpdateAsync(long id, T entity)
     {
-        var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix, id);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().PatchAsync(url, entity.SerializeToJson());
     }
 
     public Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
     {
-        var url = GetFullUrl(_client.EntityBaseUrl, entity.EntityUrlSuffix, id);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
     public Task DeleteAsync(T entity, long id, bool throwException = false)
     {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity.EntityUrlSuffix, id);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
-    public Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput input, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity
+    public Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput entity, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity
     {
-        var url = GetFullUrl(_client.EntityBaseUrl, input.EntityUrlSuffix, "search");
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, true);
         var expCache = new ConcurrentDictionary<string, Delegate>();
         var dict = new Dictionary<string, dynamic>();
 
@@ -86,12 +86,11 @@ public class HubspotClient<T> where T : class, IHubspotEntity
 
             if (name == null)
                 throw new InvalidExpressionException(
-                    string.Format("The expression '{0}' is invalid. You must supply an expression that references a property or a function of the type '{1}'.",
-                        exp.Body, typeof(T)));
+                    $"The expression '{exp.Body}' is invalid. You must supply an expression that references a property or a function of the type '{typeof(T)}'.");
 
             var key = typeof(T).FullName + "." + name;
             var func = (Func<TInput, dynamic>)expCache.GetOrAdd(key, _ => ((LambdaExpression)exp).Compile());
-            dict[name] = func(input);
+            dict[name] = func(entity);
         }
 
         return _client.HttpClient().PostAsync<HubspotStandardSearchReturnModel<TInput>>(url, GetSearchModel(dict).SerializeToJson());
@@ -102,27 +101,25 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return new HubspotStandardSearchModel(parameters);
     }
 
-    private static string GetFullUrl(string baseUrlPrefix, string suffix)
+    private static string GetFullUrl(string baseUrlPrefix, IHubspotEntity entity, bool isSearchUrl = false)
     {
-        return Url.Combine(baseUrlPrefix, suffix)
+        if (entity is IHubspotCustomEntity custom)
+        {
+            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, isSearchUrl ? "search" : string.Empty)
+                .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+        }
+        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, isSearchUrl ? "search" : string.Empty)
             .SetQueryParam("hapikey", HubspotSettings.ApiToken);
     }
 
-    private static string GetFullUrl(string baseUrlPrefix, string suffix, long id)
+    private static string GetFullUrl(string baseUrlPrefix, IHubspotEntity entity, long id)
     {
-        return Url.Combine(baseUrlPrefix, suffix, id.ToString())
-            .SetQueryParam("hapikey", HubspotSettings.ApiToken);
-    }
-
-    private static string GetFullUrl(string baseUrlPrefix, string suffix, string objectTypeId)
-    {
-        return Url.Combine(baseUrlPrefix, suffix, objectTypeId)
-            .SetQueryParam("hapikey", HubspotSettings.ApiToken);
-    }
-
-    private static string GetFullUrl(string baseUrlPrefix, string suffix, string objectTypeId, long id)
-    {
-        return Url.Combine(baseUrlPrefix, suffix, objectTypeId, id.ToString())
+        if (entity is IHubspotCustomEntity custom)
+        {
+            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, id.ToString())
+                .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+        }
+        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString())
             .SetQueryParam("hapikey", HubspotSettings.ApiToken);
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using wre.hubspot.apiclient.CRM.CustomObjects;
 using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.test.CustomObjects.Dto;
 
-public class Jobsite : HubspotCustomObject, IHubspotCustomEntity, IHubspotCustomSerialization
+public class Jobsite : wre.hubspot.apiclient.CRM.CustomObjects.HubspotCustomObject, IHubspotCustomEntity
 {
     public Jobsite()
     {
@@ -36,6 +35,4 @@ public class Jobsite : HubspotCustomObject, IHubspotCustomEntity, IHubspotCustom
     public DateTime? NextServiceDate { get; set; }
     [JsonPropertyName("acquisitionname")]
     public string? AcquisitionName { get; set; }
-    [JsonIgnore]
-    public string ObjectTypeId { get; set; }
 }

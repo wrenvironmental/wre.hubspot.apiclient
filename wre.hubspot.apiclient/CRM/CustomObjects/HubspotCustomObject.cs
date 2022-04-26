@@ -1,8 +1,15 @@
-﻿using wre.hubspot.apiclient.Common;
+﻿using System.Text.Json.Serialization;
+using wre.hubspot.apiclient.Common;
+using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.CustomObjects;
 
-public abstract class HubspotCustomObject : HubspotCommonEntity
+public class HubspotCustomObject : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotCustomEntity
 {
-    protected HubspotCustomObject() : base("objects") { }
+    public HubspotCustomObject() : base("objects")
+    {
+        
+    }
+    [JsonIgnore]
+    public string ObjectTypeId { get; set; } = string.Empty;
 }

@@ -1,8 +1,9 @@
-﻿using wre.hubspot.apiclient.Interfaces;
+﻿using wre.hubspot.apiclient.Common;
+using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.CustomObjects;
 
-public class HubspotCustomObjectClient : IHubspotClient
+public class HubspotCustomObjectClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotCustomEntity
 {
     private readonly HttpClient _httpClient;
 
@@ -12,6 +13,8 @@ public class HubspotCustomObjectClient : IHubspotClient
         {
             BaseAddress = new Uri(baseUrl)
         };
+
+        Init(this);
     }
 
     public HttpClient HttpClient()

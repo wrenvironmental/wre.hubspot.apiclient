@@ -1,7 +1,6 @@
 ﻿namespace wre.hubspot.apiclient.Interfaces;
 
-public interface IHubspotCustomEntity
+public interface IHubspotCustomEntity : IHubspotEntity
 {
-    string EntityUrlSuffix { get; }
     string ObjectTypeId { get; set; }
 }
