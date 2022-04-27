@@ -71,6 +71,13 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
+    public virtual Task DeleteAsync(IEnumerable<T> entities, bool throwException = false)
+    {
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First()).AppendPathSegment("/batch/archive");
+        var deleteObjects = new HubspotStandardRequestListModel<long>(new List<long>(entities.Where(e => e.Id.HasValue).Select(e => e.Id.Value).AsEnumerable()));
+        return _client.HttpClient().PostAsync(url, deleteObjects.SerializeToJson());
+    }
+
     public virtual Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput entity, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, true);
