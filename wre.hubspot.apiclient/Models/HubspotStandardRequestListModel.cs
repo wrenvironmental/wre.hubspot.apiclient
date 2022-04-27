@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using wre.hubspot.apiclient.Associations;
 using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.Models;
@@ -17,7 +18,12 @@ public class HubspotStandardRequestListModel<T>
             }
             else
             {
-                RequestObjects.Add(entity);
+                if (entity == null) continue;
+                if (typeof(T).IsValueType)
+                {
+                    RequestObjects.Add(new Identifier(entity.ToString()));
+                }
+                else RequestObjects.Add(entity);
             }
         }
     }

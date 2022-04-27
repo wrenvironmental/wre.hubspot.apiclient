@@ -7,6 +7,7 @@ namespace wre.hubspot.apiclient.CRM.Products;
 public class HubspotProduct : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotProduct
 {
     public HubspotProduct() : base("objects/products") { }
+    public long? Id { get; set; }
     public string? Description { get; set; }
     [JsonPropertyName("hs_sku")]
     public string? Code { get; set; }

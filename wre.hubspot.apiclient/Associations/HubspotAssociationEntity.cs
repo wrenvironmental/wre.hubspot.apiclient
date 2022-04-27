@@ -6,6 +6,10 @@ public class HubspotAssociationEntity : IHubspotEntity, IHubspotCustomSerializat
 {
     private readonly string _fromEntity;
     private readonly string _toEntity;
+    /// <summary>
+    /// Not used
+    /// </summary>
+    public long? Id { get; set; }
 
     public HubspotAssociationEntity(IHubspotAssociation from, IHubspotAssociation to)
     {
@@ -32,9 +36,9 @@ public class HubspotAssociationEntity : IHubspotEntity, IHubspotCustomSerializat
 
 public class Identifier
 {
-    public Identifier(string id)
+    public Identifier(string? id)
     {
         Id = id;
     }
-    public string Id { get; set; }
+    public string? Id { get; set; }
 }

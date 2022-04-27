@@ -11,6 +11,8 @@ public class HubspotCustomObject : HubspotCommonEntity, IHubspotCustomSerializat
         
     }
 
+    public long? Id { get; set; }
+
     [JsonIgnore]
     public string ObjectTypeId { get; set; } = string.Empty;
 }
