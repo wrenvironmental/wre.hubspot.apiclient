@@ -1,18 +1,15 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.test.CustomObjects.Dto;
 
-public class Jobsite : wre.hubspot.apiclient.CRM.CustomObjects.HubspotCustomObject, IHubspotCustomEntity
+public class MyCustomObject : apiclient.CRM.CustomObjects.HubspotCustomObject
 {
-    public Jobsite()
+    public MyCustomObject()
     {
-        ObjectTypeId = "2-6130903";
+        ObjectTypeId = "2-6341115";
     }
 
-    [Key]
     [JsonPropertyName("jobsiteid")]
     public int JobsiteId { get; set; }
     [JsonPropertyName("sitename")]

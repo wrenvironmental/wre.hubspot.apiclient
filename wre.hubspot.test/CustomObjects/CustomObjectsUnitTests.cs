@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
-using wre.hubspot.apiclient.CRM.CustomObjects;
 using wre.hubspot.test.CustomObjects.Dto;
 
 namespace wre.hubspot.test.CustomObjects
@@ -20,14 +20,24 @@ namespace wre.hubspot.test.CustomObjects
         public async Task CanCreateCustomObject()
         {
             var client = new HubspotClient();
-            client.CRM.CustomObjects = new HubspotCustomObjectClient<HubspotCustomObject>("");
-
-            await client.CRM.CustomObjects.CreateAsync(new Jobsite()
+            var listOfCustomObjects = new List<MyCustomObject>
             {
-             JobsiteId   = 123
-            });
+                new()
+                {
+                    Address = "test",
+                    SiteName = "test",
+                    JobsiteId = 123
+                },
+                new()
+                {
+                    JobsiteId = 456,
+                    Address = "test",
+                    SiteName = "test"
+                }
+            };
+            var batchCreated = await client.CRM.CustomObjects.CreateAsync<MyCustomObject>(listOfCustomObjects);
 
-            Assert.IsTrue(true);
+            Assert.IsTrue(batchCreated.Result.Count == listOfCustomObjects.Count);
         }
     }
 }

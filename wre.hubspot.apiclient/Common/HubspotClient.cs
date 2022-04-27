@@ -46,6 +46,13 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
+    public virtual Task<HubspotStandardResponseListModel<TReturn>> CreateAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
+    {
+        if (!entities.Any()) throw new InvalidOperationException("At least one entity must be provided");
+        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First())}".AppendPathSegment("/batch/create");
+        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entities.ToList()).SerializeToJson());
+    }
+
     public virtual Task UpdateAsync(long id, T entity)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
@@ -122,4 +129,34 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString())
             .SetQueryParam("hapikey", HubspotSettings.ApiToken);
     }
+}
+
+public class MyCustomObject2
+{
+    public MyCustomObject2()
+    {
+    }
+
+    [JsonPropertyName("jobsiteid")]
+    public int JobsiteId { get; set; }
+    [JsonPropertyName("sitename")]
+    public string? SiteName { get; set; }
+    [JsonPropertyName("contactname")]
+    public string? ContactName { get; set; }
+    [JsonPropertyName("address")]
+    public string? Address { get; set; }
+    [JsonPropertyName("city")]
+    public string? City { get; set; }
+    [JsonPropertyName("state")]
+    public string? State { get; set; }
+    [JsonPropertyName("zip")]
+    public string? Zip { get; set; }
+    [JsonPropertyName("gallons")]
+    public int? Gallons { get; set; }
+    [JsonPropertyName("lastservicedate")]
+    public DateTime? LastServiceDate { get; set; }
+    [JsonPropertyName("nextservicedate")]
+    public DateTime? NextServiceDate { get; set; }
+    [JsonPropertyName("acquisitionname")]
+    public string? AcquisitionName { get; set; }
 }
