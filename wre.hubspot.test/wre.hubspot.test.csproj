@@ -18,8 +18,4 @@
     <ProjectReference Include="..\wre.hubspot.apiclient\wre.hubspot.apiclient.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CustomObjects\Dto\" />
-  </ItemGroup>
-
 </Project>

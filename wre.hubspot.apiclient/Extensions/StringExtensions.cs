@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using wre.hubspot.apiclient.Common;
+using wre.hubspot.apiclient.CRM.CustomObjects;
 using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
 
@@ -14,13 +16,25 @@ public static class StringExtensions
             PropertyNamingPolicy = new LowerCaseNamingPolicy(),
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
+        settings.Converters.Add(new DateTimeConverter());
+        settings.Converters.Add(new PolymorphicWriteOnlyJsonConverter<HubspotCustomObject>());
 
-        if (entity is not IHubspotCustomSerialization hubspotEntity) 
+        if (entity is not IHubspotCustomSerialization hubspotEntity)
             return JsonSerializer.Serialize(entity, settings);
 
-        
-        settings.Converters.Add(new DateTimeConverter());
         return JsonSerializer.Serialize(hubspotEntity.GetCustomObject(entity), settings);
+    }
+}
 
+public class PolymorphicWriteOnlyJsonConverter<T> : JsonConverter<T>
+{
+    public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(writer, value, value.GetType(), options);
     }
 }
