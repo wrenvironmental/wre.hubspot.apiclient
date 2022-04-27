@@ -6,10 +6,10 @@ public class MyCustomObjectFrom : IHubspotAssociation
 {
     public MyCustomObjectFrom()
     {
-        Id = string.Empty;
+        AssociationId = string.Empty;
     }
     
-    public string Id { get; set; }
+    public string AssociationId { get; set; }
     public string EntityName => "orders";
     public string AssociationName => "work_order";
 }

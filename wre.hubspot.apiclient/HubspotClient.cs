@@ -9,7 +9,7 @@ namespace wre.hubspot.apiclient
         {
             var baseUrl = HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl));
             CRM = new CRMObjects(baseUrl);
-            Associations = new HubspotAssociationClient(baseUrl);
+            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(baseUrl);
         }
 
         public CRMObjects CRM
@@ -17,7 +17,7 @@ namespace wre.hubspot.apiclient
             get;
         }
 
-        public HubspotAssociationClient Associations
+        public HubspotAssociationClient<HubspotAssociationEntity> Associations
         {
             get;
         }

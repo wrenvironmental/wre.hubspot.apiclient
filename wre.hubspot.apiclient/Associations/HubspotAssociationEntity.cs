@@ -11,8 +11,8 @@ public class HubspotAssociationEntity : IHubspotEntity, IHubspotCustomSerializat
     {
         _fromEntity = from.EntityName;
         _toEntity = to.EntityName;
-        From = new Identifier(from.Id);
-        To = new Identifier(to.Id);
+        From = new Identifier(from.AssociationId);
+        To = new Identifier(to.AssociationId);
         Type = $"{from.AssociationName}_to_{to.AssociationName}";
     }
 

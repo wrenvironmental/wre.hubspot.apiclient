@@ -34,37 +34,37 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         }
     }
 
-    public Task CreateAsync(T entity)
+    public virtual Task CreateAsync(T entity)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
         return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
     }
 
-    public Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity) where TReturn : class
+    public virtual Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity) where TReturn : class
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
         return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public Task UpdateAsync(long id, T entity)
+    public virtual Task UpdateAsync(long id, T entity)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().PatchAsync(url, entity.SerializeToJson());
     }
 
-    public Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
+    public virtual Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public Task DeleteAsync(T entity, long id, bool throwException = false)
+    public virtual Task DeleteAsync(T entity, long id, bool throwException = false)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
-    public Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput entity, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity
+    public virtual Task<HubspotStandardSearchReturnModel<TInput>> SearchAsync<TInput>(TInput entity, params Expression<Func<TInput, dynamic?>>[]? expressions) where TInput : IHubspotEntity
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, true);
         var expCache = new ConcurrentDictionary<string, Delegate>();

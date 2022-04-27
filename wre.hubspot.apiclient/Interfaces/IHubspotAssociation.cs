@@ -2,7 +2,7 @@
 
 public interface IHubspotAssociation
 {
-    string Id { get; set; }
+    string AssociationId { get; set; }
     string EntityName { get; }
     string AssociationName { get; }
 }
