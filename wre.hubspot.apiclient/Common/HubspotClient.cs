@@ -71,7 +71,7 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
-    public virtual Task DeleteAsync(IEnumerable<T> entities, bool throwException = false)
+    public virtual Task DeleteAsync(IEnumerable<T>? entities, bool throwException = false)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First()).AppendPathSegment("/batch/archive");
         var deleteObjects = new HubspotStandardRequestListModel<long>(new List<long>(entities.Where(e => e.Id.HasValue).Select(e => e.Id.Value).AsEnumerable()));
@@ -115,7 +115,7 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return new HubspotStandardSearchModel(parameters);
     }
 
-    private static string GetFullUrl(string baseUrlPrefix, IHubspotEntity entity, bool isSearchUrl = false)
+    protected static string GetFullUrl(string baseUrlPrefix, IHubspotEntity entity, bool isSearchUrl = false)
     {
         if (entity is IHubspotCustomEntity custom)
         {
@@ -136,34 +136,4 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString())
             .SetQueryParam("hapikey", HubspotSettings.ApiToken);
     }
-}
-
-public class MyCustomObject2
-{
-    public MyCustomObject2()
-    {
-    }
-
-    [JsonPropertyName("jobsiteid")]
-    public int JobsiteId { get; set; }
-    [JsonPropertyName("sitename")]
-    public string? SiteName { get; set; }
-    [JsonPropertyName("contactname")]
-    public string? ContactName { get; set; }
-    [JsonPropertyName("address")]
-    public string? Address { get; set; }
-    [JsonPropertyName("city")]
-    public string? City { get; set; }
-    [JsonPropertyName("state")]
-    public string? State { get; set; }
-    [JsonPropertyName("zip")]
-    public string? Zip { get; set; }
-    [JsonPropertyName("gallons")]
-    public int? Gallons { get; set; }
-    [JsonPropertyName("lastservicedate")]
-    public DateTime? LastServiceDate { get; set; }
-    [JsonPropertyName("nextservicedate")]
-    public DateTime? NextServiceDate { get; set; }
-    [JsonPropertyName("acquisitionname")]
-    public string? AcquisitionName { get; set; }
 }
