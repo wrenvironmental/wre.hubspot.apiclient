@@ -2,7 +2,7 @@
 
 namespace wre.hubspot.apiclient.Associations;
 
-public class HubspotAssociationEntity : IHubspotEntity, IHubspotCustomSerialization
+public class HubspotAssociationEntity : IHubspotEntity
 {
     private readonly string _fromEntity;
     private readonly string _toEntity;
@@ -24,14 +24,7 @@ public class HubspotAssociationEntity : IHubspotEntity, IHubspotCustomSerializat
     public Identifier To { get; set; }
     public string Type { get; set; }
 
-    public string EntityUrlSuffix => $"{_fromEntity}/{_toEntity}/batch/create";
-    public object GetCustomObject<T>(T entity)
-    {
-        return new HubspotStandardAssociationRequestModel<T>
-        {
-            Mappings = { entity }
-        };
-    }
+    public string EntityUrlSuffix => $"{_fromEntity}/{_toEntity}";
 }
 
 public class Identifier

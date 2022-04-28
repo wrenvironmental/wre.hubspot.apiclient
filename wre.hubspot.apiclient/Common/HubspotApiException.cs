@@ -9,5 +9,9 @@ public class HubspotApiException : Exception
         HubspotError = hubspotError;
     }
 
+    public HubspotApiException(string errorMessage) : base(errorMessage)
+    {
+    }
+
     public HubspotErrorModel? HubspotError { get; }
 }

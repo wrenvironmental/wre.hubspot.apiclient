@@ -17,19 +17,25 @@ namespace wre.hubspot.test.CustomObjects
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 
-        [TestMethod]
-        public async Task CanCreateCustomObject()
+        public static async Task<MyCustomObject> CreateNewCustomObject(string? id = null)
         {
             var client = new HubspotClient();
             var customObj = new MyCustomObject
             {
-                Address = "test",
-                SiteName = "test",
+                Address = $"Test Address {id}",
+                SiteName = "Test Sitename",
                 JobsiteId = new Random().Next(int.MinValue, int.MaxValue)
             };
             var batchCreated = await client.CRM.CustomObjects.CreateAsync<MyCustomObject>(customObj);
+            batchCreated.Result.Id = batchCreated.Id;
+            return batchCreated.Result;
+        }
 
-            Assert.IsTrue(batchCreated.Id > 0);
+        [TestMethod]
+        public async Task CanCreateCustomObject()
+        {
+            var customObject = await CreateNewCustomObject();
+            Assert.IsTrue(customObject.Id > 0);
         }
 
         [TestMethod]

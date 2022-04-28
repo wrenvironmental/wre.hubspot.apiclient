@@ -16,19 +16,28 @@ namespace wre.hubspot.test.Contact
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 
+        public static async Task<HubspotContact> CreateNewContact()
+        {
+            var rnd = new Random();
+            var client = new HubspotClient();
+            var hubspotContact = new HubspotContact()
+            {
+                Company = "Company " + rnd.Next(1, 100),
+                Email = Guid.NewGuid().ToString()[10..].Replace("-", "") + "@me.com",
+                FirstName = "Test",
+                LastName = "Contact" + rnd.Next(1, 100)
+            };
+
+            var createdContact = await client.CRM.Contacts.CreateAsync<HubspotContact>(hubspotContact);
+            createdContact.Result.Id = createdContact.Id;
+            return createdContact.Result;
+        }
+
         [TestMethod]
         public async Task CanCreateDefaultContact()
         {
             var client = new HubspotClient();
-            var hubspotContact = new HubspotContact()
-            {
-                Company = "test",
-                Email = "me@me.com",
-                FirstName = "Michael",
-                LastName = "Prado",
-                Phone = "5085991234",
-                Website = "www.me.com"
-            };
+            var hubspotContact = await CreateNewContact();
             var contactSearch = new CustomContact()
             {
                 Email = hubspotContact.Email
@@ -37,7 +46,8 @@ namespace wre.hubspot.test.Contact
             var existingContact = await client.CRM.Contacts.SearchAsync(contactSearch, contact => contact.Email);
             if (existingContact.Results.Count == 1)
             {
-                await client.CRM.Contacts.DeleteAsync(hubspotContact, existingContact.Results[0].Id ?? 0, true);
+                hubspotContact.Id = existingContact.Results[0].Id;
+                await client.CRM.Contacts.DeleteAsync(hubspotContact, true);
             }
             
             var createdContact = await client.CRM.Contacts.CreateAsync<HubspotContact>(hubspotContact);
@@ -48,17 +58,8 @@ namespace wre.hubspot.test.Contact
         [TestMethod]
         public async Task CanCreateDefaultContactAndGetResponse()
         {
-            var client = new HubspotClient();
-            await client.CRM.Contacts.CreateAsync(new CustomContact()
-            {
-                CustomerId = 123,
-                Company = "test",
-                Email = "me2@me2.com",
-                FirstName = "Michael",
-                LastName = "Prado",
-                Phone = "5085961345",
-                Website = "www.eu.com"
-            });
+            var newContact = await CreateNewContact();
+            Assert.IsNotNull(newContact);
         }
 
         [TestMethod]

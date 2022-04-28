@@ -1,12 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
 using wre.hubspot.apiclient.Associations;
-using wre.hubspot.apiclient.Common;
-using wre.hubspot.apiclient.Extensions;
 using wre.hubspot.test.Associations.Dto;
-using wre.hubspot.test.Contact.Dto;
+using wre.hubspot.test.Contact;
+using wre.hubspot.test.CustomObjects;
+using wre.hubspot.test.CustomObjects.Dto;
 
 namespace wre.hubspot.test.Associations
 {
@@ -20,20 +22,62 @@ namespace wre.hubspot.test.Associations
         }
 
         [TestMethod]
-        public async Task CanCreateDefaultContact()
+        public async Task CanCreateSimpleAssociation()
         {
-            var objectFrom = new MyCustomObjectFrom
+            var hubspotContact = await ContactsUnitTests.CreateNewContact();
+            var hubspotCustomObject = await CustomObjectsUnitTests.CreateNewCustomObject(hubspotContact.LastName.Replace("Contact", string.Empty));
+            Assert.IsTrue(hubspotContact.Id > 0);
+            Assert.IsTrue(hubspotCustomObject.Id > 0);
+            var objectFrom = new MyCustomObjectTo
             {
-                AssociationId = "1347772089"
+                AssociationId = hubspotCustomObject.Id.ToString()
             };
-            var objectTo = new MyCustomObjectTo
+            var objectTo = new ContactAssociation
             {
-                AssociationId = "1346559110"
+                AssociationId = hubspotContact.Id.ToString()
             };
+            
             var client = new HubspotClient();
             var association = new HubspotAssociationEntity(objectFrom, objectTo);
             await client.Associations.CreateAsync(association);
 
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public async Task CanCreateMultipleAssociations()
+        {
+            var client = new HubspotClient();
+            var hubspotContact = await ContactsUnitTests.CreateNewContact();
+            var listOfCustomObjects = new List<MyCustomObject>
+            {
+                await CustomObjectsUnitTests.CreateNewCustomObject(hubspotContact.LastName.Replace("Contact", string.Empty)),
+                await CustomObjectsUnitTests.CreateNewCustomObject(hubspotContact.LastName.Replace("Contact", string.Empty))
+            };
+
+            Assert.IsTrue(listOfCustomObjects.Count(c => c?.Id > 0) == 2);
+
+            var associations = new List<HubspotAssociationEntity>()
+            {
+                new HubspotAssociationEntity(new MyCustomObjectTo()
+                    {
+                        AssociationId = listOfCustomObjects.First().Id.ToString()
+                    },
+                    new ContactAssociation()
+                    {
+                        AssociationId = hubspotContact.Id.ToString()
+                    }),
+                new HubspotAssociationEntity(new MyCustomObjectTo()
+                    {
+                        AssociationId = listOfCustomObjects.Skip(1).First().Id.ToString()
+                    },
+                    new ContactAssociation()
+                    {
+                        AssociationId = hubspotContact.Id.ToString()
+                    }),
+            };
+
+            var response = await client.Associations.CreateAsync<HubspotAssociationEntity>(associations);
             Assert.IsTrue(true);
         }
     }
