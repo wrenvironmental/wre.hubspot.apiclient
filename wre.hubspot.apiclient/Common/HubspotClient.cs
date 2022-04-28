@@ -53,9 +53,9 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entities.ToList()).SerializeToJson());
     }
 
-    public virtual Task UpdateAsync(long id, T entity)
+    public virtual Task UpdateAsync(T entity)
     {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, entity.Id ?? throw new ArgumentException(nameof(entity.Id)));
         return _client.HttpClient().PatchAsync(url, entity.SerializeToJson());
     }
 
@@ -65,9 +65,9 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public virtual Task DeleteAsync(T entity, long id, bool throwException = false)
+    public virtual Task DeleteAsync(T entity, bool throwException = false)
     {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, entity.Id ?? throw new ArgumentException(nameof(entity.Id)));
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 

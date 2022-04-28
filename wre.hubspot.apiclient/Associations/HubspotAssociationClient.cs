@@ -31,7 +31,7 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
         throw new NotImplementedException("Associations don't have search implemented yet");
     }
 
-    public override Task UpdateAsync(long id, T entity)
+    public override Task UpdateAsync(T entity)
     {
         throw new NotImplementedException("Associations don't have update implemented yet");
     }
@@ -41,7 +41,7 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
         throw new NotImplementedException("Associations don't have update implemented yet");
     }
 
-    public override Task DeleteAsync(T entity, long id, bool throwException = false)
+    public override Task DeleteAsync(T entity, bool throwException = false)
     {
         throw new NotImplementedException("Associations don't have delete implemented yet");
     }
