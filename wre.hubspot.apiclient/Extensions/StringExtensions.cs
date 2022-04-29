@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using wre.hubspot.apiclient.Common;
+using wre.hubspot.apiclient.CRM.Contacts;
 using wre.hubspot.apiclient.CRM.CustomObjects;
 using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
@@ -18,6 +18,7 @@ public static class StringExtensions
         };
         settings.Converters.Add(new DateTimeConverter());
         settings.Converters.Add(new PolymorphicWriteOnlyJsonConverter<HubspotCustomObject>());
+        settings.Converters.Add(new PolymorphicWriteOnlyJsonConverter<HubspotContact>());
 
         if (entity is not IHubspotCustomSerialization hubspotEntity)
             return JsonSerializer.Serialize(entity, settings);

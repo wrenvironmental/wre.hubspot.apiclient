@@ -39,7 +39,7 @@ namespace wre.hubspot.test.Associations
             
             var client = new HubspotClient();
             var association = new HubspotAssociationEntity(objectFrom, objectTo);
-            await client.Associations.CreateAsync(association);
+            await client.Associations.CreateAsync<HubspotAssociationEntity>(association);
 
             Assert.IsTrue(true);
         }
@@ -77,7 +77,7 @@ namespace wre.hubspot.test.Associations
                     }),
             };
 
-            var response = await client.Associations.CreateAsync<HubspotAssociationEntity>(associations);
+            var response = await client.Associations.CreateBatchAsync<HubspotAssociationEntity>(associations);
             Assert.IsTrue(true);
         }
     }

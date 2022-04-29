@@ -28,23 +28,19 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
 
     public string EntityBaseUrl => "crm/v3/associations";
 
-    public override Task CreateAsync(T entity)
-    {
-        var request = new HubspotStandardRequestListModel<T>(new List<T>() { entity });
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
-        return _httpClient.PostAsync(url, request.SerializeToJson());
-    }
-
     public override Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity)
     {
-        throw new NotImplementedException("Single association with return is not implemented yet");
+        var request = new HubspotStandardRequestListModel<T>(new List<T> { entity });
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity).AppendPathSegment("/batch/create");
+        return _httpClient.PostAsync<HubspotStandardResponseModel<TReturn>>(url, request.SerializeToJson());
     }
 
-    public override Task<HubspotStandardResponseListModel<TReturn>> CreateAsync<TReturn>(IEnumerable<T> entities)
+    public override Task<HubspotStandardResponseListModel<TReturn>> CreateBatchAsync<TReturn>(IEnumerable<T> entities)
     {
-        if (!entities.Any()) throw new InvalidOperationException("At least one entity must be provided");
-        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First())}".AppendPathSegment("/batch/create");
-        var request = new HubspotStandardRequestListModel<T>(entities.ToList());
+        var entitiesArray = entities.ToList();
+        if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
+        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/create");
+        var request = new HubspotStandardRequestListModel<T>(entitiesArray);
         return _httpClient.PostAsync<HubspotStandardResponseListModel<TReturn>>(url, request.SerializeToJson());
     }
 
@@ -53,14 +49,14 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
         throw new NotImplementedException("Associations don't have search implemented yet");
     }
 
-    public override Task UpdateAsync(T entity)
+    public override Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity)
     {
         throw new NotImplementedException("Associations don't have update implemented yet");
     }
 
-    public override Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity)
+    public override Task<HubspotStandardResponseListModel<TReturn>> UpdateBatchAsync<TReturn>(IEnumerable<T> entities)
     {
-        throw new NotImplementedException("Associations don't have update implemented yet");
+        throw new NotImplementedException("Associations don't have batch update implemented yet");
     }
 
     public override Task DeleteAsync(T entity, bool throwException = false)
@@ -68,7 +64,7 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
         throw new NotImplementedException("Associations don't have delete implemented yet");
     }
 
-    public override Task DeleteAsync(IEnumerable<T>? entities, bool throwException = false)
+    public override Task DeleteBatchAsync(IEnumerable<T> entities, bool throwException = false)
     {
         throw new NotImplementedException("Associations don't have delete batch implemented yet");
     }

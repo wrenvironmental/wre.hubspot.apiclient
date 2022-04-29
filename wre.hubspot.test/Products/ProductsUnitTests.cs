@@ -21,7 +21,7 @@ namespace wre.hubspot.test.Products
         public async Task CanCreateDefaultProduct()
         {
             var client = new HubspotClient();
-            await client.CRM.Products.CreateAsync(new HubspotProduct()
+            _ = await client.CRM.Products.CreateAsync<HubspotProduct>(new HubspotProduct()
             {
                 Description = "Test",
                 Name = "0123456789",

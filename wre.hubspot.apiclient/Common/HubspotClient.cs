@@ -34,29 +34,18 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         }
     }
 
-    public virtual Task CreateAsync(T entity)
-    {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
-        return _client.HttpClient().PostAsync(url, entity.SerializeToJson());
-    }
-
     public virtual Task<HubspotStandardResponseModel<TReturn>> CreateAsync<TReturn>(T entity) where TReturn : class
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity);
         return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public virtual Task<HubspotStandardResponseListModel<TReturn>> CreateAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
+    public virtual Task<HubspotStandardResponseListModel<TReturn>> CreateBatchAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
     {
-        if (!entities.Any()) throw new InvalidOperationException("At least one entity must be provided");
-        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First())}".AppendPathSegment("/batch/create");
-        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entities.ToList()).SerializeToJson());
-    }
-
-    public virtual Task UpdateAsync(T entity)
-    {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, entity.Id ?? throw new ArgumentException(nameof(entity.Id)));
-        return _client.HttpClient().PatchAsync(url, entity.SerializeToJson());
+        var entitiesArray = entities.ToList();
+        if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
+        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/create");
+        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entitiesArray).SerializeToJson());
     }
 
     public virtual Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
@@ -65,16 +54,26 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
+    public virtual Task<HubspotStandardResponseListModel<TReturn>> UpdateBatchAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
+    {
+        var entitiesArray = entities.ToList();
+        if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
+        var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/update");
+        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entitiesArray).SerializeToJson());
+    }
+
     public virtual Task DeleteAsync(T entity, bool throwException = false)
     {
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, entity.Id ?? throw new ArgumentException(nameof(entity.Id)));
         return _client.HttpClient().DeleteAsync(url, throwException);
     }
 
-    public virtual Task DeleteAsync(IEnumerable<T>? entities, bool throwException = false)
+    public virtual Task DeleteBatchAsync(IEnumerable<T> entities, bool throwException = false)
     {
-        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entities.First()).AppendPathSegment("/batch/archive");
-        var deleteObjects = new HubspotStandardRequestListModel<long>(new List<long>(entities.Where(e => e.Id.HasValue).Select(e => e.Id.Value).AsEnumerable()));
+        var entitiesArray = entities.ToList();
+        if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First()).AppendPathSegment("/batch/archive");
+        var deleteObjects = new HubspotStandardRequestListModel<long>(new List<long>(entitiesArray.Where(e => e.Id.HasValue).Select(e => e.Id ?? 0).AsEnumerable()));
         return _client.HttpClient().PostAsync(url, deleteObjects.SerializeToJson());
     }
 
