@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using wre.hubspot.apiclient;
+using wre.hubspot.apiclient.CRM.Deals;
 using wre.hubspot.apiclient.CRM.Deals.Enums;
 using wre.hubspot.apiclient.Extensions;
 
@@ -20,7 +21,7 @@ namespace wre.hubspot.test.Deals
         public async Task CanCreateDefaultDeal()
         {
             var client = new HubspotClient();
-            await client.CRM.Deals.CreateAsync(new apiclient.CRM.Deals.HubspotDeal()
+            _ = await client.CRM.Deals.CreateAsync<HubspotDeal>(new HubspotDeal()
             {
                 Amount = 100,
                 CloseDate = new DateTime(2022, 01, 01),

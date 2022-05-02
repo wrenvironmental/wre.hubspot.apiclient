@@ -58,7 +58,7 @@ namespace wre.hubspot.test.CustomObjects
                     SiteName = "test"
                 }
             };
-            var batchCreated = await client.CRM.CustomObjects.CreateAsync<MyCustomObject>(listOfCustomObjects);
+            var batchCreated = await client.CRM.CustomObjects.CreateBatchAsync<MyCustomObject>(listOfCustomObjects);
 
             Assert.IsTrue(batchCreated.Result.Count == listOfCustomObjects.Count);
         }
@@ -83,7 +83,7 @@ namespace wre.hubspot.test.CustomObjects
                     SiteName = "test"
                 }
             };
-            var batchCreated = await client.CRM.CustomObjects.CreateAsync<MyCustomObject>(listOfCustomObjects);
+            var batchCreated = await client.CRM.CustomObjects.CreateBatchAsync<MyCustomObject>(listOfCustomObjects);
             var itemsToBeDeleted = new List<MyCustomObject>();
             foreach (var item in batchCreated.Result)
             {
@@ -91,7 +91,7 @@ namespace wre.hubspot.test.CustomObjects
                 itemsToBeDeleted.Add(item.Result);
             }
             Assert.IsTrue(batchCreated.Result.Count == listOfCustomObjects.Count);
-            await client.CRM.CustomObjects.DeleteAsync(itemsToBeDeleted);
+            await client.CRM.CustomObjects.DeleteBatchAsync(itemsToBeDeleted);
 
 
             var search1 = await client.CRM.Contacts.SearchAsync(itemsToBeDeleted.First(), customObj => customObj.Address);
