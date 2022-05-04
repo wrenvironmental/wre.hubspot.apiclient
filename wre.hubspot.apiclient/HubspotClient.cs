@@ -12,6 +12,12 @@ namespace wre.hubspot.apiclient
             Associations = new HubspotAssociationClient<HubspotAssociationEntity>(baseUrl);
         }
 
+        public HubspotClient(HttpClient httpClient)
+        {
+            CRM = new CRMObjects(httpClient);
+            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(httpClient);
+        }
+
         public CRMObjects CRM
         {
             get;

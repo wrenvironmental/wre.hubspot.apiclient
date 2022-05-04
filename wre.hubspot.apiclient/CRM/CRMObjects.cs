@@ -16,6 +16,14 @@ public class CRMObjects
         CustomObjects = new HubspotCustomObjectClient<HubspotCustomObject>(baseUrl);
     }
 
+    public CRMObjects(HttpClient httpClient)
+    {
+        Contacts = new HubspotContactClient<HubspotContact>(httpClient);
+        Deals = new HubspotDealClient<HubspotDeal>(httpClient);
+        Products = new HubspotProductClient<HubspotProduct>(httpClient);
+        CustomObjects = new HubspotCustomObjectClient<HubspotCustomObject>(httpClient);
+    }
+
     public HubspotContactClient<HubspotContact> Contacts { get; set; }
     public HubspotDealClient<HubspotDeal> Deals { get; set; }
     public HubspotProductClient<HubspotProduct> Products { get; set; }

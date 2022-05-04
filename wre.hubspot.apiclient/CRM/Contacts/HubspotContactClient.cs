@@ -17,6 +17,12 @@ public class HubspotContactClient<T> : HubspotClient<T>, IHubspotClient where T 
         Init(this);
     }
 
+    public HubspotContactClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        Init(this);
+    }
+
     public HttpClient HttpClient()
     {
         return _httpClient;

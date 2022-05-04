@@ -17,6 +17,12 @@ public class HubspotDealClient<T> : HubspotClient<T>, IHubspotClient where T : c
         Init(this);
     }
 
+    public HubspotDealClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        Init(this);
+    }
+
     public HttpClient HttpClient()
     {
         return _httpClient;

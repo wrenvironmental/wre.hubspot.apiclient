@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Flurl" Version="3.0.4" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
   </ItemGroup>
 
 </Project>
