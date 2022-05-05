@@ -17,6 +17,12 @@ public class HubspotProductClient<T> : HubspotClient<T>, IHubspotClient where T 
         Init(this);
     }
 
+    public HubspotProductClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        Init(this);
+    }
+
     public HttpClient HttpClient()
     {
         return _httpClient;

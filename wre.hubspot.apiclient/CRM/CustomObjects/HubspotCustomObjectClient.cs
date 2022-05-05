@@ -17,6 +17,12 @@ public class HubspotCustomObjectClient<T> : HubspotClient<T>, IHubspotClient whe
         Init(this);
     }
 
+    public HubspotCustomObjectClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        Init(this);
+    }
+
     public HttpClient HttpClient()
     {
         return _httpClient;

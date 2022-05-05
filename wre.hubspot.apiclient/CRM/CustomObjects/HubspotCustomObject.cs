@@ -10,6 +10,7 @@ public class HubspotCustomObject : HubspotCommonEntity, IHubspotCustomSerializat
     {
         
     }
+
     [JsonIgnore]
     public virtual long? Id { get; set; }
 

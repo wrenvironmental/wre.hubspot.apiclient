@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.Infrastructure;
@@ -32,7 +33,7 @@ public static class HttpExtensions
             NumberHandling = JsonNumberHandling.AllowReadingFromString
         };
         var content = await response.Content.ReadAsStringAsync();
-        if (!response.IsSuccessStatusCode)
+        if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
             
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);

@@ -21,6 +21,12 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
         Init(this);
     }
 
+    public HubspotAssociationClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        Init(this);
+    }
+
     public HttpClient HttpClient()
     {
         return _httpClient;
