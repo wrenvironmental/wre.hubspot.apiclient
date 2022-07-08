@@ -18,7 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_attempt }}
+      run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_number }}
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -28,3 +28,4 @@ jobs:
       with:
           PROJECT_FILE_PATH: wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
           NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+          VERSION_STATIC: 1.0.${{ github.run_number }}
