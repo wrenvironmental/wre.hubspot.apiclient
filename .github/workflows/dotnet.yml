@@ -24,7 +24,7 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
     - name: Publish To Nuget
-      uses: brandedoutcast/publish-nuget@v2.5.2
+      uses: brandedoutcast/publish-nuget@v2.5.5
       with:
           PROJECT_FILE_PATH: wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
           NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
