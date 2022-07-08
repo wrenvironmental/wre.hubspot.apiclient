@@ -17,7 +17,7 @@ jobs:
         dotnet-version: 6.0.x
     - name: Find and Replace
       run: |
-        sed -i "s/\(<Version>\([0-9]\+\.\)\{2\}\)\([0-9]\+\)/\1${{github.run_number}}/" wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
+        sed -i "s/1.0.0/1.0.${{ github.run_number }}/g" wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
