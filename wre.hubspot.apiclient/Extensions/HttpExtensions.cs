@@ -35,7 +35,6 @@ public static class HttpExtensions
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
-            
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
             throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
         }
