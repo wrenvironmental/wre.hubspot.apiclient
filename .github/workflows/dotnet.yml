@@ -5,24 +5,23 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  NugetDeployment:
 
     runs-on: ubuntu-latest
     environment: Production
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET ${{secrets.NUGET_API_KEY}}
+    - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+    - name: Find and Replace
+      run: |
+        sed -i "s/1.0.0/1.0.${{ github.run_number }}/g" wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_number }}
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
+      run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_number }}    
     - name: Publish To Nuget
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
