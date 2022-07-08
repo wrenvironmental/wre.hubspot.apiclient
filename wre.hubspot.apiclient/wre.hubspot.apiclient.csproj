@@ -5,6 +5,11 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Version>1.0.0</Version>
+		<Authors>Michael Prado</Authors>
+		<Company>Wind River Environmental</Company>
+		<PackageProjectUrl>https://github.com/wrenvironmental/wre.hubspot.apiclient</PackageProjectUrl>
+		<Description>A client library to allow help communicating with Hubspot REST API endpoints</Description>
+		<RepositoryType>https://github.com/wrenvironmental/wre.hubspot.apiclient</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
