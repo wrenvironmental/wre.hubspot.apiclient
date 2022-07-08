@@ -16,8 +16,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Find and Replace
-      run: |
-        sed -i "s/1.0.0/1.0.${{ github.run_number }}/g" wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
+      uses: rshillington/file-content-replacer@master
+      with:
+        files: "**/*.csproj"
+        from: "<Version>1.0.0</Version>"
+        to: "<Version>1.0.${{ github.run_number }}</Version>"
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
