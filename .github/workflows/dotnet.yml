@@ -18,7 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release /property:Version=1.0.0
+      run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_attempt }}
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
