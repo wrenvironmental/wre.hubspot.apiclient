@@ -19,10 +19,11 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore -c Release /property:Version=1.0.${{ github.run_number }}
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
+    - name: Find and Replace
+      uses: jacobtomlinson/gha-find-replace@master
+      with:
+        find: "1.0.1"
+        replace: 1.0.${{ github.run_number }}
     - name: Publish To Nuget
       uses: brandedoutcast/publish-nuget@v2.5.5
       with:
