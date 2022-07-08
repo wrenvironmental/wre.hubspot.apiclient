@@ -3,8 +3,6 @@ name: .NET
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
   build:
@@ -24,5 +22,5 @@ jobs:
     - name: Publish To Nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
-          PROJECT_FILE_PATH: wre.hubspot.apiclient/wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
+          PROJECT_FILE_PATH: wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
