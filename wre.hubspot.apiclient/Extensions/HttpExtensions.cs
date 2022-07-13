@@ -20,7 +20,7 @@ public static class HttpExtensions
                 PropertyNameCaseInsensitive = true
             };
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+            throw new HubspotApiException($"Error processing Http request", errorModel, response);
         }
     }
 
@@ -36,7 +36,7 @@ public static class HttpExtensions
         if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+            throw new HubspotApiException($"Error processing request", errorModel, response);
         }
 
         return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, settings) ?? throw new ArgumentException("");
@@ -53,7 +53,7 @@ public static class HttpExtensions
                 PropertyNameCaseInsensitive = true
             };
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+            throw new HubspotApiException($"Error processing request", errorModel, response);
         }
     }
 
@@ -70,7 +70,7 @@ public static class HttpExtensions
         {
 
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+            throw new HubspotApiException($"Error processing request", errorModel, response);
         }
 
         return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, settings) ?? throw new ArgumentException("");
@@ -87,7 +87,7 @@ public static class HttpExtensions
                 PropertyNameCaseInsensitive = true
             };
             var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request. Url={response.RequestMessage?.RequestUri}", errorModel);
+            throw new HubspotApiException($"Error processing request", errorModel, response);
         }
     }
 }

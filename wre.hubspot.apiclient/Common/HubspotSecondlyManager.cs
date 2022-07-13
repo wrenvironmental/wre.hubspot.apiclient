@@ -3,7 +3,6 @@
 public class HubspotSecondlyManager : DelegatingHandler
 {
     private ManualResetEventSlim threadController;
-    private int timeWaited = 0;
     private object _lock = new ();
 
     public HubspotSecondlyManager()
