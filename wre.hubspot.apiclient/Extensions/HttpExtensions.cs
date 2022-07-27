@@ -9,37 +9,34 @@ namespace wre.hubspot.apiclient.Extensions;
 
 public static class HttpExtensions
 {
+    public static JsonSerializerOptions DefaultOptions = new JsonSerializerOptions()
+    {
+        PropertyNameCaseInsensitive = true,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString
+    };
+
     public static async Task PostAsync(this HttpClient httpClient, string url, string data)
     {
         var response = await httpClient.PostAsync(url, new JsonContent(data));
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            var settings = new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing Http request", errorModel, response);
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            throw new HubspotApiException($"Error processing POST request", errorModel, response);
         }
     }
 
     public static async Task<TReturn> PostAsync<TReturn>(this HttpClient httpClient, string url, string data) where TReturn : class
     {
         var response = await httpClient.PostAsync(url, new JsonContent(data));
-        var settings = new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request", errorModel, response);
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            throw new HubspotApiException($"Error processing POST request", errorModel, response);
         }
 
-        return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, settings) ?? throw new ArgumentException("");
+        return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, DefaultOptions) ?? throw new ArgumentException("");
     }
 
     public static async Task PatchAsync(this HttpClient httpClient, string url, string data)
@@ -48,32 +45,22 @@ public static class HttpExtensions
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            var settings = new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request", errorModel, response);
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            throw new HubspotApiException($"Error processing PATCH request", errorModel, response);
         }
     }
 
     public static async Task<TReturn> PatchAsync<TReturn>(this HttpClient httpClient, string url, string data) where TReturn : class
     {
         var response = await httpClient.PatchAsync(url, new JsonContent(data));
-        var settings = new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request", errorModel, response);
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            throw new HubspotApiException($"Error processing PATCH request", errorModel, response);
         }
 
-        return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, settings) ?? throw new ArgumentException("");
+        return string.IsNullOrEmpty(content) ? default! : JsonSerializer.Deserialize<TReturn>(content, DefaultOptions) ?? throw new ArgumentException("");
     }
 
     public static async Task DeleteAsync(this HttpClient httpClient, string url, bool throwError = false)
@@ -82,12 +69,8 @@ public static class HttpExtensions
         if (throwError && !response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            var settings = new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            };
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, settings);
-            throw new HubspotApiException($"Error processing request", errorModel, response);
+            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            throw new HubspotApiException($"Error processing DELETE request", errorModel, response);
         }
     }
 }
