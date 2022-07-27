@@ -3,19 +3,18 @@
 public class HubspotSecondlyManager : DelegatingHandler
 {
     private ManualResetEventSlim threadController;
-    private object _lock = new ();
+    private readonly System.Timers.Timer timer;
 
-    public HubspotSecondlyManager()
+    public HubspotSecondlyManager(int internalInSeconds = 10)
     {
         threadController = new ManualResetEventSlim();
+        timer = new System.Timers.Timer(internalInSeconds * 60);
+        timer.Elapsed += Timer_Elapsed;
     }
 
-    private void Wait()
+    private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
     {
-        lock (_lock)
-        {
-            Thread.Sleep(1000);
-        }
+        threadController.Set();
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -31,12 +30,7 @@ public class HubspotSecondlyManager : DelegatingHandler
 
         if (remaining <= 10)
         {
-            Wait();
             threadController.Wait(cancellationToken);
-        }
-        else
-        {
-            threadController.Set();
         }
 
         return response;
