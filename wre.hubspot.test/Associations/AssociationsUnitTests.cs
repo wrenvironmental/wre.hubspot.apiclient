@@ -17,7 +17,7 @@ namespace wre.hubspot.test.Associations
     {
         public AssociationsUnitTests()
         {
-            HubspotSettings.ApiToken = Environment.GetEnvironmentVariable("HubspotApiKey");
+            HubspotSettings.AccessToken = Environment.GetEnvironmentVariable("HubspotAccessToken");
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 

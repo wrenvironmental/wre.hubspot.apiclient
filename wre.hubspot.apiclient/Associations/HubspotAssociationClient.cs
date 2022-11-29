@@ -18,6 +18,8 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
             BaseAddress = new Uri(baseUrl)
         };
 
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {HubspotSettings.AccessToken}");
+
         Init(this);
     }
 

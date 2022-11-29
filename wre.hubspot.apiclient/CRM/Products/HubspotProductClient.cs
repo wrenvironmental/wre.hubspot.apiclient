@@ -14,6 +14,7 @@ public class HubspotProductClient<T> : HubspotClient<T>, IHubspotClient where T 
             BaseAddress = new Uri(baseUrl)
         };
 
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {HubspotSettings.AccessToken}");
         Init(this);
     }
 
