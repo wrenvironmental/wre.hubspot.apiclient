@@ -13,7 +13,7 @@ namespace wre.hubspot.test.CustomObjects
     {
         public CustomObjectsUnitTests()
         {
-            HubspotSettings.ApiToken = Environment.GetEnvironmentVariable("HubspotApiKey");
+            HubspotSettings.AccessToken = Environment.GetEnvironmentVariable("HubspotAccessToken");
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 

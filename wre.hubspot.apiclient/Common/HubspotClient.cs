@@ -118,21 +118,17 @@ public class HubspotClient<T> where T : class, IHubspotEntity
     {
         if (entity is IHubspotCustomEntity custom)
         {
-            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, isSearchUrl ? "search" : string.Empty)
-                .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, isSearchUrl ? "search" : string.Empty);
         }
-        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, isSearchUrl ? "search" : string.Empty)
-            .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, isSearchUrl ? "search" : string.Empty);
     }
 
     private static string GetFullUrl(string baseUrlPrefix, IHubspotEntity entity, long id)
     {
         if (entity is IHubspotCustomEntity custom)
         {
-            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, id.ToString())
-                .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, id.ToString());
         }
-        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString())
-            .SetQueryParam("hapikey", HubspotSettings.ApiToken);
+        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString());
     }
 }

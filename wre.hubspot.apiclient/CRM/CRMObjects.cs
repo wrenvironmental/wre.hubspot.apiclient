@@ -10,10 +10,10 @@ public class CRMObjects
 {
     public CRMObjects(string baseUrl)
     {
-        Contacts = new HubspotContactClient<HubspotContact>(baseUrl);
-        Deals = new HubspotDealClient<HubspotDeal>(baseUrl);
-        Products = new HubspotProductClient<HubspotProduct>(baseUrl);
-        CustomObjects = new HubspotCustomObjectClient<HubspotCustomObject>(baseUrl);
+        Contacts = new HubspotContactClient<HubspotContact>();
+        Deals = new HubspotDealClient<HubspotDeal>();
+        Products = new HubspotProductClient<HubspotProduct>();
+        CustomObjects = new HubspotCustomObjectClient<HubspotCustomObject>();
     }
 
     public CRMObjects(HttpClient httpClient)

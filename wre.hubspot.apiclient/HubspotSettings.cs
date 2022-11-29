@@ -2,6 +2,6 @@
 
 public static class HubspotSettings
 {
-    public static string? ApiToken { get; set; }
+    public static string? AccessToken { get; set; }
     public static string? BaseUrl { get; set; }
 }

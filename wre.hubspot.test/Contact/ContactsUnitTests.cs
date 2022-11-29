@@ -12,7 +12,7 @@ namespace wre.hubspot.test.Contact
     {
         public ContactsUnitTests()
         {
-            HubspotSettings.ApiToken = Environment.GetEnvironmentVariable("HubspotApiKey");
+            HubspotSettings.AccessToken = Environment.GetEnvironmentVariable("HubspotAccessToken");
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 
