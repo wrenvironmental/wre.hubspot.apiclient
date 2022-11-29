@@ -7,11 +7,11 @@ public class HubspotCustomObjectClient<T> : HubspotClient<T>, IHubspotClient whe
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotCustomObjectClient(string baseUrl)
+    public HubspotCustomObjectClient()
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(baseUrl)
+            BaseAddress = new Uri(HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl)))
         };
 
         Init(this);

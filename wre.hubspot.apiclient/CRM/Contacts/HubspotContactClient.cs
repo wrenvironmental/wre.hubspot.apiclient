@@ -7,11 +7,11 @@ public class HubspotContactClient<T> : HubspotClient<T>, IHubspotClient where T 
 {
     private readonly HttpClient _httpClient;    
 
-    public HubspotContactClient(string baseUrl)
+    public HubspotContactClient()
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(baseUrl)
+            BaseAddress = new Uri(HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl)))
         };
 
         _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {HubspotSettings.AccessToken}");

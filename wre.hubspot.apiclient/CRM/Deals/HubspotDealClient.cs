@@ -7,11 +7,11 @@ public class HubspotDealClient<T> : HubspotClient<T>, IHubspotClient where T : c
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotDealClient(string baseUrl)
+    public HubspotDealClient()
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(baseUrl)
+            BaseAddress = new Uri(HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl)))
         };
 
         Init(this);

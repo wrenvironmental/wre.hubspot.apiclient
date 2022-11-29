@@ -30,11 +30,11 @@ namespace wre.hubspot.test.Associations
             Assert.IsTrue(hubspotCustomObject.Id > 0);
             var objectFrom = new MyCustomObjectTo
             {
-                AssociationId = hubspotCustomObject.Id.ToString()
+                AssociationId = hubspotCustomObject.Id?.ToString() ?? string.Empty
             };
             var objectTo = new ContactAssociation
             {
-                AssociationId = hubspotContact.Id.ToString()
+                AssociationId = hubspotContact.Id.ToString() ?? string.Empty
             };
             
             var client = new HubspotClient();
@@ -61,19 +61,19 @@ namespace wre.hubspot.test.Associations
             {
                 new HubspotAssociationEntity(new MyCustomObjectTo()
                     {
-                        AssociationId = listOfCustomObjects.First().Id.ToString()
+                        AssociationId = listOfCustomObjects.First().Id.ToString() ?? string.Empty
                     },
                     new ContactAssociation()
                     {
-                        AssociationId = hubspotContact.Id.ToString()
+                        AssociationId = hubspotContact.Id.ToString() ?? string.Empty
                     }),
                 new HubspotAssociationEntity(new MyCustomObjectTo()
                     {
-                        AssociationId = listOfCustomObjects.Skip(1).First().Id.ToString()
+                        AssociationId = listOfCustomObjects.Skip(1).First().Id.ToString() ?? string.Empty
                     },
                     new ContactAssociation()
                     {
-                        AssociationId = hubspotContact.Id.ToString()
+                        AssociationId = hubspotContact.Id.ToString() ?? string.Empty
                     }),
             };
 
