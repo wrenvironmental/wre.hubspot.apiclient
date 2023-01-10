@@ -16,11 +16,12 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Find and Replace
-      uses: rshillington/file-content-replacer@master
+      uses: jacobtomlinson/gha-find-replace@v2
       with:
-        files: "**/*.csproj"
-        from: "<Version>1.0.0</Version>"
-        to: "<Version>1.0.${{ github.run_number }}</Version>"
+        include: "**/*.csproj"
+        find: "<Version>1.0.0</Version>"
+        replace: "<Version>1.0.${{ github.run_number }}</Version>"
+        regex: false
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
