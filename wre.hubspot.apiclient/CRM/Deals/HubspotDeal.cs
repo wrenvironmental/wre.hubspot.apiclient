@@ -6,8 +6,6 @@ namespace wre.hubspot.apiclient.CRM.Deals;
 
 public class HubspotDeal : HubspotCommonEntity, IHubspotCustomSerialization, IHubspotDeal
 {
-    private string _pipeline = "default";
-
     public HubspotDeal() : base("objects/deals") { }
     public long? Id { get; set; }
     [JsonPropertyName("dealname")]
@@ -15,13 +13,9 @@ public class HubspotDeal : HubspotCommonEntity, IHubspotCustomSerialization, IHu
     public string? Description { get; set; }
     public decimal Amount { get; set; }
 
-    public string Pipeline
-    {
-        get => _pipeline;
-        set => _pipeline = value;
-    }
+    public string? Pipeline { get; set; } = null!;
 
-    public DateTime CloseDate { get; set; }
+    public DateTime? CloseDate { get; set; }
     /// <summary>
     /// You can refer to EDealType
     /// </summary>
