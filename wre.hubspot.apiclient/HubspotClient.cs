@@ -10,13 +10,13 @@ namespace wre.hubspot.apiclient
             var baseUrl = HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl));
             var apiKey = HubspotSettings.AccessToken ?? throw new ArgumentException(nameof(HubspotSettings.AccessToken));
             CRM = new CRMObjects(baseUrl, apiKey);
-            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(baseUrl, apiKey);
+            Associations = new HubspotAssociationClient(baseUrl, apiKey);
         }
 
         public HubspotClient(HttpClient httpClient)
         {
             CRM = new CRMObjects(httpClient);
-            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(httpClient);
+            Associations = new HubspotAssociationClient(httpClient);
         }
 
         public CRMObjects CRM
@@ -24,7 +24,7 @@ namespace wre.hubspot.apiclient
             get;
         }
 
-        public HubspotAssociationClient<HubspotAssociationEntity> Associations
+        public HubspotAssociationClient Associations
         {
             get;
         }

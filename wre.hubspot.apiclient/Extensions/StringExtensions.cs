@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Flurl;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
@@ -20,5 +21,14 @@ public static class StringExtensions
             return JsonSerializer.Serialize(entity, settings);
 
         return JsonSerializer.Serialize(hubspotEntity.GetCustomObject(entity), settings);
+    }
+
+    public static string GetFullUrl(this IHubspotEntity entity, string baseUrlPrefix, bool isSearchUrl = false)
+    {
+        if (entity is IHubspotCustomEntity custom)
+        {
+            return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, isSearchUrl ? "search" : string.Empty);
+        }
+        return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, isSearchUrl ? "search" : string.Empty);
     }
 }
