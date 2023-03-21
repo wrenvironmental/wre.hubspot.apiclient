@@ -1,13 +1,13 @@
 ﻿using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.Interfaces;
 
-namespace wre.hubspot.apiclient.CRM.Products;
+namespace wre.hubspot.apiclient.CRM.LineItems;
 
-public class HubspotProductClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotProduct
+public class HubspotLineItemClient<T> : HubspotClient<T>, IHubspotClient where T : class, IHubspotLineItem
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotProductClient(string baseUrl, string apiKey)
+    public HubspotLineItemClient(string baseUrl, string apiKey)
     {
         _httpClient = new HttpClient
         {
@@ -18,7 +18,7 @@ public class HubspotProductClient<T> : HubspotClient<T>, IHubspotClient where T 
         Init(this);
     }
 
-    public HubspotProductClient(HttpClient httpClient)
+    public HubspotLineItemClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
         Init(this);
