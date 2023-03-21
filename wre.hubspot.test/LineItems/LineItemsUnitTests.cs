@@ -19,7 +19,7 @@ namespace wre.hubspot.test.LineItems
             HubspotSettings.BaseUrl = "https://api.hubapi.com";
         }
 
-        private async Task<CustomLineItem?> CreateLineItemAsync(string name, int? productId = null)
+        private async Task<CustomLineItem?> CreateLineItemAsync(string? name, int? productId = null)
         {
             var client = new HubspotClient();
             var result = await client.CRM.LineItems.CreateAsync<CustomLineItem>(new CustomLineItem()
@@ -110,8 +110,56 @@ namespace wre.hubspot.test.LineItems
             };
 
             var association = new HubspotAssociationEntity(objectFrom, objectTo);
-            await client.Associations.CreateAsync<HubspotAssociationEntity>(association);
+            await client.Associations.CreateAsync(association);
             Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public async Task GetLineItemsFromDeal()
+        {
+            var client = new HubspotClient();
+            var name = DateTime.Now.ToString("MMddyyyyHHmmss");
+            var createdLineItem = await CreateLineItemAsync(name);
+            if (createdLineItem == null)
+            {
+                Assert.Fail();
+                return;
+            }
+
+            var dealName = "0123456789";
+            var dealResult = await client.CRM.Deals.CreateAsync<HubspotDeal>(new HubspotDeal()
+            {
+                Amount = 100,
+                CloseDate = new DateTime(2022, 01, 01),
+                Type = EDealType.ExistingBusiness.ToString().ToLower(),
+                Description = "Test",
+                Name = dealName,
+                Stage = EDealStage.ClosedWon.ToString().ToLower(),
+                Priority = EDealPriority.High.ToString().ToLower()
+            });
+            Assert.IsTrue(dealResult.Id > 0);
+            var lineItemResult = await CreateLineItemAsync(null, 1428820526);
+            Assert.IsTrue(lineItemResult.Id > 0);
+            var objectFrom = new LineItemAssociation
+            {
+                AssociationId = lineItemResult.Id?.ToString() ?? string.Empty
+            };
+            var objectTo = new DealAssociation
+            {
+                AssociationId = dealResult.Id.ToString() ?? string.Empty
+            };
+
+            var association = new HubspotAssociationEntity(objectFrom, objectTo);
+            await client.Associations.CreateAsync(association);
+            Assert.IsTrue(true);
+
+            var objectFrom2 = new DealAssociation
+            {
+                Id = dealResult.Id
+            };
+            var objectTo2 = new LineItemAssociation();
+            var results = await client.Associations.ListAsync<DealAssociation, LineItemAssociation>(objectFrom2, objectTo2);
+            Assert.IsNotNull(results.Result.Count == 1);
         }
     }
 }

@@ -7,9 +7,9 @@ namespace wre.hubspot.test.LineItems.Dto
     {
     }
 
-    internal class LineItemAssociation : HubspotLineItem, IHubspotAssociation
+    internal class LineItemAssociation : HubspotLineItem, IHubspotAssociation, IHubspotEntity
     {
-        public string AssociationId { get; set; }
+        public string AssociationId { get; set; } = null!;
 
         public string EntityName => "line_items";
 
