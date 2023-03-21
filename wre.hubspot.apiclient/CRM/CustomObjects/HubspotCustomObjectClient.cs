@@ -7,13 +7,14 @@ public class HubspotCustomObjectClient<T> : HubspotClient<T>, IHubspotClient whe
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotCustomObjectClient()
+    public HubspotCustomObjectClient(string baseUrl, string apiKey)
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl)))
+            BaseAddress = new Uri(baseUrl)
         };
 
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
         Init(this);
     }
 

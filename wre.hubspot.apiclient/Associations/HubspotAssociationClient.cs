@@ -11,14 +11,14 @@ public class HubspotAssociationClient<T> : HubspotClient<T>, IHubspotClient wher
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotAssociationClient(string baseUrl)
+    public HubspotAssociationClient(string baseUrl, string apiKey)
     {
         _httpClient = new HttpClient
         {
             BaseAddress = new Uri(baseUrl)
         };
 
-        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {HubspotSettings.AccessToken}");
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
 
         Init(this);
     }

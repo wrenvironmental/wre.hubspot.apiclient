@@ -7,13 +7,14 @@ public class HubspotDealClient<T> : HubspotClient<T>, IHubspotClient where T : c
 {
     private readonly HttpClient _httpClient;
 
-    public HubspotDealClient()
+    public HubspotDealClient(string baseUrl, string apiKey)
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri(HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl)))
+            BaseAddress = new Uri(baseUrl)
         };
 
+        _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
         Init(this);
     }
 

@@ -8,8 +8,9 @@ namespace wre.hubspot.apiclient
         public HubspotClient()
         {
             var baseUrl = HubspotSettings.BaseUrl ?? throw new ArgumentException(nameof(HubspotSettings.BaseUrl));
-            CRM = new CRMObjects(baseUrl);
-            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(baseUrl);
+            var apiKey = HubspotSettings.AccessToken ?? throw new ArgumentException(nameof(HubspotSettings.AccessToken));
+            CRM = new CRMObjects(baseUrl, apiKey);
+            Associations = new HubspotAssociationClient<HubspotAssociationEntity>(baseUrl, apiKey);
         }
 
         public HubspotClient(HttpClient httpClient)
