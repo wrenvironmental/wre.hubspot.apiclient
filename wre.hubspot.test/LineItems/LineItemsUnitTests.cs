@@ -24,7 +24,7 @@ namespace wre.hubspot.test.LineItems
             var client = new HubspotClient();
             var result = await client.CRM.LineItems.CreateAsync<CustomLineItem>(new CustomLineItem()
             {
-                Amount = 100,
+                Price = 100,
                 Name = name,
                 Quantity = 100,
                 ProductId = productId
