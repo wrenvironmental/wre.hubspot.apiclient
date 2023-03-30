@@ -2,9 +2,12 @@
 using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Flurl;
 using wre.hubspot.apiclient.Extensions;
+using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
 using wre.hubspot.apiclient.Models;
 
@@ -56,7 +59,7 @@ public class HubspotClient<T> where T : class, IHubspotEntity
 
     public virtual Task<HubspotStandardResponseListModel<TReturn>> UpdateBatchAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
     {
-        var entitiesArray = entities.ToList();
+        var entitiesArray = new List<T>(entities);
         if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
         var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/update");
         return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entitiesArray).SerializeToJson());

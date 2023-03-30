@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using wre.hubspot.apiclient.Extensions;
 using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.Models;
@@ -9,18 +11,21 @@ public class HubspotStandardRequestModel<T>
 
     public HubspotStandardRequestModel(T entity)
     {
-        RequestObject = entity;
-        if (entity is IHubspotEntity hEntity)
+        if (entity != null)
         {
-            //When sending data to Hubspot, the object cannot contain an ID
-            if (hEntity.Id.HasValue)
+            RequestObject = JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(entity));
+            if (RequestObject is IHubspotEntity hEntity)
             {
-                this.Id = hEntity.Id;
-                hEntity.Id = null;
+                //When sending data to Hubspot, the object cannot contain an ID
+                if (hEntity.Id.HasValue)
+                {
+                    this.Id = hEntity.Id;
+                    hEntity.Id = null;
+                }
             }
         }
     }
 
     [JsonPropertyName("properties")]
-    public T RequestObject { get; }
+    public T? RequestObject { get; }
 }
