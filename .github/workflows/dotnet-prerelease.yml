@@ -1,0 +1,33 @@
+name: .NET-Pre-Release
+
+on:
+  push:
+    branches: [ "polimorphysm" ]
+
+jobs:
+  NugetDeployment:
+
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Find and Replace
+      uses: jacobtomlinson/gha-find-replace@v2
+      with:
+        include: "**/*.csproj"
+        find: "<Version>1.0.0</Version>"
+        replace: "<Version>0.0.${{ github.run_number }}-test</Version>"
+        regex: false
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore -c Release
+    - name: Publish To Nuget
+      uses: brandedoutcast/publish-nuget@v2.5.4
+      with:
+          PROJECT_FILE_PATH: wre.hubspot.apiclient/wre.hubspot.apiclient.csproj
+          NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
