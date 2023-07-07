@@ -43,8 +43,8 @@ namespace wre.hubspot.apiclient.CRM.Companies
 
         public int? DaysBetweenPumpingServices { get; set; }
         public int? AcquisitionId { get; set; }
-        public string AcquisitionName { get; set; }
-        public string PumpingFieldOffice { get; set; }
+        public string? AcquisitionName { get; set; }
+        public string? PumpingFieldOffice { get; set; }
         public int? PumpingFieldOfficeId { get; set; }
 
         #endregion Remove

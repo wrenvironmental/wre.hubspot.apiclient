@@ -27,7 +27,7 @@ public class HubspotContact : HubspotCommonEntity, IHubspotCustomSerialization, 
     public int CustId { get; set; }
 
     [JsonPropertyName("accstatus")]
-    public string AccountStatus { get; set; }
+    public string? AccountStatus { get; set; }
 
     [JsonPropertyName("mcreateddate")]
     public DateTime CreatedDate { get; set; }

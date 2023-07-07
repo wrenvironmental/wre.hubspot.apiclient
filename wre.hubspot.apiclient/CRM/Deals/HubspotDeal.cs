@@ -46,12 +46,12 @@ public class HubspotDeal : HubspotCommonEntity, IHubspotCustomSerialization, IHu
     public DateTime? CompletedDate { get; set; }
     public DateTime? ClosedDate { get; set; }
     public DateTime? CancelledDate { get; set; }
-    public string PaymentType { get; set; }
-    public string JobCategory { get; set; }
-    public string JobSubCategory { get; set; }
-    public string Region { get; set; }
-    public string FieldOffice { get; set; }
-    public string OrderId { get; set; }
+    public string? PaymentType { get; set; }
+    public string? JobCategory { get; set; }
+    public string? JobSubCategory { get; set; }
+    public string? Region { get; set; }
+    public string? FieldOffice { get; set; }
+    public string? OrderId { get; set; }
 
     #endregion Remove
 }
