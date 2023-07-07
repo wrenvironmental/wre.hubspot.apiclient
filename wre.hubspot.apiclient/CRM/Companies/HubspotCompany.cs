@@ -17,5 +17,28 @@ namespace wre.hubspot.apiclient.CRM.Companies
         public string? City { get; set; }
         public string? State { get; set; }
         public string? Zip { get; set; }
+        public int JobsiteId { get; set; }
+
+        public int? Gallons { get; set; }
+
+        public DateTime? LastServiceDate { get; set; }
+
+        public DateTime? NextServiceDate { get; set; }
+
+        public DateTime? LastPumpingServiceDate { get; set; }
+
+        public DateTime? LastAdditivePurchaseDate { get; set; }
+
+        public DateTime? NextEstPumpingServiceDate => !this.DaysBetweenPumpingServices.HasValue || !this.LastPumpingServiceDate.HasValue ? new DateTime?() : new DateTime?(this.LastPumpingServiceDate.Value.AddDays((double)this.DaysBetweenPumpingServices.Value));
+
+        public int? DaysBetweenPumpingServices { get; set; }
+
+        public int? AcquisitionId { get; set; }
+
+        public string? AcquisitionName { get; set; }
+
+        public string? PumpingFieldOffice { get; set; }
+
+        public int? PumpingFieldOfficeId { get; set; }
     }
 }

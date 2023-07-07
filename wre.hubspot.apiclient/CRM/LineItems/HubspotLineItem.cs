@@ -17,5 +17,5 @@ public class HubspotLineItem : HubspotCommonEntity, IHubspotCustomSerialization,
     public string? Name { get; set; }
 
     [JsonPropertyName("hs_product_id")]
-    public int? ProductId { get; set; }
+    public long? ProductId { get; set; }
 }
