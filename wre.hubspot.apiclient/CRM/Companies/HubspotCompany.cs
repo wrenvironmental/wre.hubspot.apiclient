@@ -31,7 +31,7 @@ namespace wre.hubspot.apiclient.CRM.Companies
         public DateTime? NextServiceDate { get; set; }
         public DateTime? LastPumpingServiceDate { get; set; }
         public DateTime? LastAdditivePurchaseDate { get; set; }
-
+        public DateTime? NextPumpingServiceDate { get; set; }
         public DateTime? NextEstPumpingServiceDate
         {
             get
