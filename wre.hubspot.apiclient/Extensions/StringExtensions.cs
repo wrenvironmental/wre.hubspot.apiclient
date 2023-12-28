@@ -17,8 +17,7 @@ public static class StringExtensions
     {
         var options = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = new LowerCaseNamingPolicy(),
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            PropertyNamingPolicy = new LowerCaseNamingPolicy()
         };
 
         options.Converters.Add(new DateTimeConverter());
