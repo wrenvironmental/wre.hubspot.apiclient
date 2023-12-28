@@ -32,8 +32,8 @@ namespace wre.hubspot.apiclient.CRM.Companies
         public DateTime? LastPumpingServiceDate { get; set; }
         public DateTime? LastAdditivePurchaseDate { get; set; }
         public DateTime? NextPumpingServiceDate { get; set; }
+        public DateTime? NextEstPumpingServiceDate { get; set; }
 
-        public int? DaysBetweenPumpingServices { get; set; }
         public int? AcquisitionId { get; set; }
         public string? AcquisitionName { get; set; }
         public string? PumpingFieldOffice { get; set; }
