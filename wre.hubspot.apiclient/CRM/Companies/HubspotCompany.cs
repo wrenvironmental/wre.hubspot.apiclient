@@ -32,14 +32,6 @@ namespace wre.hubspot.apiclient.CRM.Companies
         public DateTime? LastPumpingServiceDate { get; set; }
         public DateTime? LastAdditivePurchaseDate { get; set; }
         public DateTime? NextPumpingServiceDate { get; set; }
-        public DateTime? NextEstPumpingServiceDate
-        {
-            get
-            {
-                if (DaysBetweenPumpingServices == null || LastPumpingServiceDate == null) return null;
-                return LastPumpingServiceDate.Value.AddDays(DaysBetweenPumpingServices.Value);
-            }
-        }
 
         public int? DaysBetweenPumpingServices { get; set; }
         public int? AcquisitionId { get; set; }
