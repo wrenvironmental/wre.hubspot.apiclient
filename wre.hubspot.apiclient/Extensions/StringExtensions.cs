@@ -20,7 +20,10 @@ public static class StringExtensions
             PropertyNamingPolicy = new LowerCaseNamingPolicy()
         };
 
+        options.Converters.Add(new NullToEmptyStringConverter());
+        options.Converters.Add(new NullToEmptyDateTimeConverter());
         options.Converters.Add(new DateTimeConverter());
+        options.Converters.Add(new NullToEmptyIntConverter());
 
         if (entity is not IHubspotCustomSerialization hubspotEntity)
         {
