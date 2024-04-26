@@ -2,12 +2,9 @@
 using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 using Flurl;
 using wre.hubspot.apiclient.Extensions;
-using wre.hubspot.apiclient.Infrastructure;
 using wre.hubspot.apiclient.Interfaces;
 using wre.hubspot.apiclient.Models;
 
@@ -43,12 +40,12 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PostAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public virtual Task<HubspotStandardResponseListModel<TReturn>> CreateBatchAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
+    public virtual Task<HubspotStandardResponseListModel<TReturn>> CreateBatchAsync<TReturn>(IEnumerable<TReturn> entities) where TReturn : T
     {
         var entitiesArray = entities.ToList();
         if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
         var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/create");
-        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entitiesArray).SerializeToJson());
+        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<TReturn>(entitiesArray).SerializeToJson());
     }
 
     public virtual Task<HubspotStandardResponseModel<TReturn>> UpdateAsync<TReturn>(long id, T entity) where TReturn : class
@@ -57,12 +54,12 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return _client.HttpClient().PatchAsync<HubspotStandardResponseModel<TReturn>>(url, entity.SerializeToJson());
     }
 
-    public virtual Task<HubspotStandardResponseListModel<TReturn>> UpdateBatchAsync<TReturn>(IEnumerable<T> entities) where TReturn : class
+    public virtual Task<HubspotStandardResponseListModel<TReturn>> UpdateBatchAsync<TReturn>(IEnumerable<TReturn> entities) where TReturn : T
     {
-        var entitiesArray = new List<T>(entities);
+        var entitiesArray = entities.ToList();
         if (entitiesArray.Count == 0) throw new InvalidOperationException("At least one entity must be provided");
         var url = $"{GetFullUrl(GetHubspotClient.EntityBaseUrl, entitiesArray.First())}".AppendPathSegment("/batch/update");
-        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<T>(entitiesArray).SerializeToJson());
+        return _client.HttpClient().PostAsync<HubspotStandardResponseListModel<TReturn>>(url, new HubspotStandardRequestListModel<TReturn>(entitiesArray).SerializeToJson());
     }
 
     public virtual Task DeleteAsync(T entity, bool throwException = false)
