@@ -36,22 +36,4 @@ public class HubspotDeal : HubspotCommonEntity, IHubspotCustomSerialization, IHu
 
     [JsonPropertyName("hs_priority")]
     public string? Priority { get; set; }
-
-    #region Remove
-
-    public int CustomerId { get; set; }
-    public int JobsiteId { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public DateTime ServiceDate { get; set; }
-    public DateTime? CompletedDate { get; set; }
-    public DateTime? ClosedDate { get; set; }
-    public DateTime? CancelledDate { get; set; }
-    public string? PaymentType { get; set; }
-    public string? JobCategory { get; set; }
-    public string? JobSubCategory { get; set; }
-    public string? Region { get; set; }
-    public string? FieldOffice { get; set; }
-    public string? OrderId { get; set; }
-
-    #endregion Remove
 }

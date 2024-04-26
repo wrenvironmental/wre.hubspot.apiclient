@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using wre.hubspot.apiclient.Common;
+﻿using wre.hubspot.apiclient.Common;
 using wre.hubspot.apiclient.Interfaces;
 
 namespace wre.hubspot.apiclient.CRM.Contacts;
@@ -22,16 +21,4 @@ public class HubspotContact : HubspotCommonEntity, IHubspotCustomSerialization, 
     public string? City { get; set; }
     public string? State { get; set; }
     public string? Zip { get; set; }
-
-    #region Remove
-
-    public int CustId { get; set; }
-
-    [JsonPropertyName("accstatus")]
-    public string? AccountStatus { get; set; }
-
-    [JsonPropertyName("mcreateddate")]
-    public DateTime CreatedDate { get; set; }
-
-    #endregion Remove
 }
