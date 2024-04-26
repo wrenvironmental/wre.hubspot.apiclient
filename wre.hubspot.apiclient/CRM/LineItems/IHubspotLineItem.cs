@@ -8,5 +8,5 @@ public interface IHubspotLineItem : IHubspotEntity
     decimal Discount { get; set; }
     decimal Quantity { get; set; }
     string? Name { get; set; }
-    int? ProductId { get; set; }
+    long? ProductId { get; set; }
 }

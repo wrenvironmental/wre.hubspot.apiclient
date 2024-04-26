@@ -9,10 +9,11 @@ namespace wre.hubspot.apiclient.Extensions;
 
 public static class HttpExtensions
 {
-    public static JsonSerializerOptions DefaultOptions = new JsonSerializerOptions()
+    public static JsonSerializerOptions DefaultOptions = new()
     {
         PropertyNameCaseInsensitive = true,
-        NumberHandling = JsonNumberHandling.AllowReadingFromString
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
+        Converters = { new NullToEmptyDateTimeConverter(), new NullToEmptyIntConverter() }
     };
 
     public static async Task<TReturn> GetAsync<TReturn>(this HttpClient httpClient, string url) where TReturn : class
