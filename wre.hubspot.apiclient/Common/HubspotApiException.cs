@@ -1,16 +1,19 @@
-﻿using wre.hubspot.apiclient.Models;
+﻿using System.Net;
+using wre.hubspot.apiclient.Models;
 
 namespace wre.hubspot.apiclient.Common;
 
 public class HubspotApiException : Exception
 {
     private readonly HttpResponseMessage? _response;
-    public HubspotErrorModel? HubspotError { get; }
+    public readonly HttpStatusCode? HttpStatusCode;
+    public readonly HubspotErrorModel? HubspotError;
 
     public HubspotApiException(string errorMessage, HubspotErrorModel? hubspotError, HttpResponseMessage response) : base(errorMessage)
     {
         HubspotError = hubspotError;
         _response = response;
+        HttpStatusCode = response.StatusCode;
     }
 
     public HubspotApiException(string errorMessage) : base(errorMessage) { }

@@ -12,4 +12,5 @@ public class HubspotErrorModel
 public class HubspotErrorContext
 {
     public string[]? Properties { get; set; }
+    public string[]? Ids { get; set; }
 }
