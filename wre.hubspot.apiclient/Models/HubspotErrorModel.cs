@@ -1,5 +1,14 @@
 ﻿namespace wre.hubspot.apiclient.Models;
 
+public class HubspotResponseError
+{
+    public DateTime CompletedAt { get; set; }
+    public string? Status { get; set; }
+    public DateTime StartedAt { get; set; }
+    public HubspotErrorModel[]? Errors { get; set; }
+    public int NumErrors { get; set; }
+}
+
 public class HubspotErrorModel
 {
     public string? Status { get; set; }

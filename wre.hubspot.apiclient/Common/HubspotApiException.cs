@@ -7,9 +7,9 @@ public class HubspotApiException : Exception
 {
     private readonly HttpResponseMessage? _response;
     public readonly HttpStatusCode? HttpStatusCode;
-    public readonly HubspotErrorModel? HubspotError;
+    public readonly HubspotResponseError? HubspotError;
 
-    public HubspotApiException(string errorMessage, HubspotErrorModel? hubspotError, HttpResponseMessage response) : base(errorMessage)
+    public HubspotApiException(string errorMessage, HubspotResponseError? hubspotError, HttpResponseMessage response) : base(errorMessage)
     {
         HubspotError = hubspotError;
         _response = response;

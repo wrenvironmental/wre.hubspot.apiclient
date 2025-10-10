@@ -22,7 +22,7 @@ public static class HttpExtensions
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing GET request", errorModel, response);
         }
 
@@ -35,7 +35,7 @@ public static class HttpExtensions
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing POST request", errorModel, response);
         }
     }
@@ -46,7 +46,7 @@ public static class HttpExtensions
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode || response.StatusCode == HttpStatusCode.MultiStatus)
         {
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing POST request", errorModel, response);
         }
 
@@ -59,7 +59,7 @@ public static class HttpExtensions
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing PATCH request", errorModel, response);
         }
     }
@@ -70,7 +70,7 @@ public static class HttpExtensions
         var content = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing PATCH request", errorModel, response);
         }
 
@@ -83,7 +83,7 @@ public static class HttpExtensions
         if (throwError && !response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-            var errorModel = JsonSerializer.Deserialize<HubspotErrorModel>(content, DefaultOptions);
+            var errorModel = JsonSerializer.Deserialize<HubspotResponseError>(content, DefaultOptions);
             throw new HubspotApiException($"Error processing DELETE request", errorModel, response);
         }
     }
