@@ -15,11 +15,14 @@ public class HubspotErrorModel
     public string? Message { get; set; }
     public Guid? CorrelationId { get; set; }
     public string? Category { get; set; }
+    public string? SubCategory { get; set; }
     public HubspotErrorContext? Context { get; set; }
 }
 
 public class HubspotErrorContext
 {
+    public string[]? ObjectType { get; set; }
     public string[]? Properties { get; set; }
+    public string[]? Id { get; set; }
     public string[]? Ids { get; set; }
 }
