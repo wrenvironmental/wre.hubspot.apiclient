@@ -12,12 +12,7 @@ namespace wre.hubspot.apiclient.Common;
 
 public class HubspotClient<T> where T : class, IHubspotEntity
 {
-    private IHubspotClient? _client;
-
-    public HubspotClient()
-    {
-        _client = null;
-    }
+    private IHubspotClient? _client = null;
 
     public void Init(IHubspotClient client)
     {
@@ -130,5 +125,12 @@ public class HubspotClient<T> where T : class, IHubspotEntity
             return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, custom.ObjectTypeId, id.ToString());
         }
         return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString());
+    }
+
+    public virtual Task<HubspotStandardResponseModel<TReturn>> GetByIdAsync<TReturn>(long id) where TReturn : class, IHubspotEntity
+    {
+        var entity = Activator.CreateInstance<TReturn>();
+        var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
+        return _client.HttpClient().GetAsync<HubspotStandardResponseModel<TReturn>>(url);
     }
 }
