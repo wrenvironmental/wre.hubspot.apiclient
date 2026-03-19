@@ -127,10 +127,16 @@ public class HubspotClient<T> where T : class, IHubspotEntity
         return Url.Combine(baseUrlPrefix, entity.EntityUrlSuffix, id.ToString());
     }
 
-    public virtual Task<HubspotStandardResponseModel<TReturn>> GetByIdAsync<TReturn>(long id) where TReturn : class, IHubspotEntity
+    public virtual Task<HubspotStandardResponseModel<TReturn>> GetByIdAsync<TReturn>(long id, params string[]? properties) where TReturn : class, IHubspotEntity
     {
         var entity = Activator.CreateInstance<TReturn>();
         var url = GetFullUrl(GetHubspotClient.EntityBaseUrl, entity, id);
+
+        if (properties?.Length > 0)
+        {
+            url = url.SetQueryParam("properties", string.Join(",", properties));
+        }
+
         return _client.HttpClient().GetAsync<HubspotStandardResponseModel<TReturn>>(url);
     }
 }
